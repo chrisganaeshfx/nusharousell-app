@@ -1,0 +1,153 @@
+/* General style */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+  }
+  
+  /* Header container */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 30px;
+  }
+  
+  /* Left header section */
+  .left_header a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: #FF6600;
+  }
+  
+  /* Middle header section (search box) */
+  .mid_header {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .mid_header .search_box {
+    display: flex;
+    align-items: center;
+  }
+  
+  .mid_header .search_box input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+  }
+  
+  .mid_header .search_box button {
+    padding: 10px;
+    background: #EEEEEE;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+  }
+  
+  /* Right header section */
+  .right_header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .right_header a {
+    font-size: 20px;
+    text-decoration: none;
+    margin-left: 10px;
+    padding: 5px 5px;
+    border: 1px solid #ccc;
+    background: #EEEEEE;
+    cursor: pointer;
+    color: black;
+  }
+
+  .right_header.dropdown {
+    position: relative;
+  }
+
+  .right_header.dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+  }
+
+  .right_header a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  /* Add a grey background color to dropdown links on hover */
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+
+  /* Did You Know */
+.DYK{
+    display: flex;
+    justify-content: center;
+}
+.fact{
+    display: flex;
+    justify-content: center;
+}
+  /* Categories */
+.categories{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.categories button{
+    padding: 10px 20px;
+    background: #EEEEEE;
+    cursor: pointer;
+    border: 1px solid #ccc;
+}
+
+.image{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.image figure figcaption{
+    color: black;
+}
+.image figure a{
+  text-decoration: none;
+}
+.image figure a:hover{
+  text-decoration: underline;
+}
