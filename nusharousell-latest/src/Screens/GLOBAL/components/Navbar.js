@@ -41,12 +41,12 @@ export default function Navbar({ searchproduct }) {
         </div>
         <div className="right_header">
           <div className="Likeb">
-            <a href="/NewProductListing/AddProduct">
+            <a href="/sell-product/AddProduct">
               <FaRegHeart />
             </a>
           </div>
           <div className="Chatb">
-            <a href="/Screens/Chats/Chat">
+            <a href="/screens/chats/Chat">
               <MdChatBubbleOutline />
             </a>
           </div>
@@ -64,7 +64,7 @@ export default function Navbar({ searchproduct }) {
             </div>
           </div>
           <div className="Sellb">
-            <a href="/Screens/NewProductListing/AddProduct">Sell</a>
+            <a href="/screens/sell-product/AddProduct">Sell</a>
           </div>
         </div>
       </div>

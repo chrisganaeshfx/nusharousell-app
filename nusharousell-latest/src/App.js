@@ -1,10 +1,10 @@
-import "./styles.css";
 import React, { useState } from "react";
-import { Home } from "./Screens/Homepage/Homepage";
-import { NewProduct } from "./Screens/NewProductListing/AddProduct";
-import { ProductDetail } from "./Screens/Productpg/ProductDetail";
-import { Chat } from "./Screens/Chats/Chat";
+import { Home } from "./screens/homepage/Homepage";
+import { NewProduct } from "./screens/sell-product/AddProduct";
+import { ProductDetail } from "./screens/product-view/ProductDetail";
+import { Chat } from "./screens/chats/Chat";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 
 export default function App() {
   const [product, setProduct] = useState([]);
@@ -18,14 +18,14 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
-            path="/Screens/NewProductListing/AddProduct"
+            path="/screens/sell-product/AddProduct"
             element={<NewProduct product={product} setProduct={setProduct} />}
           />
           <Route
-            path="/Screens/Productpg/ProductDetail"
+            path="/screens/product-view/ProductDetail"
             element={<ProductDetail />}
           />
-          <Route path="/Screens/Chats/Chat" element={<Chat />} />
+          <Route path="/screens/chats/Chat" element={<Chat />} />
         </Routes>
       </div>
     </Router>

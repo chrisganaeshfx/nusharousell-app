@@ -1,5 +1,5 @@
 import React from "react";
-import image from "../../GLOBAL/assets/images.png";
+import image from "../../GLOBAL/assets/product-images/images.png";
 
 export default function Recommendations() {
   return (
@@ -8,7 +8,7 @@ export default function Recommendations() {
       <br />
       <div className="image">
         <figure>
-          <a href="/Screens/Productpg/ProductDetail">
+          <a href="/Screens/product-view/ProductDetail">
             <img src={image} alt="reco1" />
             <figcaption>
               {" "}
@@ -17,7 +17,7 @@ export default function Recommendations() {
           </a>
         </figure>
         <figure>
-          <a href="/Screens/Productpg/ProductDetail">
+          <a href="/Screens/product-view/ProductDetail">
             <img src={image} alt="reco2" />
             <figcaption>
               {" "}
@@ -26,7 +26,7 @@ export default function Recommendations() {
           </a>
         </figure>
         <figure>
-          <a href="/Screens/Productpg/ProductDetail">
+          <a href="/Screens/product-view/ProductDetail">
             <img src={image} alt="reco3" />
             <figcaption>
               {" "}

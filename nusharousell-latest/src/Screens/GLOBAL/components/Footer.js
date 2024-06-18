@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Footer(){
     return(
-        <footer className='footer'>
+        <div className='footer'>
             <div className='About'> 
                 <h3> About </h3>
                 <p>
@@ -11,7 +11,7 @@ export default function Footer(){
                 </p>
             </div>
             <div className='Contacts'>
-                <h1>dummy</h1>
+                <h3>dummy</h3>
             </div>
             <div className='Links'>
                 <a href="#">Home</a>
@@ -20,7 +20,7 @@ export default function Footer(){
             </div>
 
             
-        </footer>
+        </div>
     );
 
 }

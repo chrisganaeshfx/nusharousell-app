@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../GLOBAL/components/Navbar";
-import image from "../GLOBAL/assets/images.png";
+import image from "../GLOBAL/assets/product-images/images.png";
 import "./ProductDetail.css";
 import { FaRegHeart } from "react-icons/fa";
 //
@@ -30,7 +30,7 @@ function ProductDetail() {
           <h4> Seller </h4>
           <p> abc </p>
           <br />
-          <a href="/Screens/Chats/Chat">Chat with Seller</a>
+          <a href="/Screens/chats/Chat">Chat with Seller</a>
           <button>
             {" "}
             <FaRegHeart />{" "}
