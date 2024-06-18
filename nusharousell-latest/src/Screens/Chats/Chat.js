@@ -7,7 +7,7 @@ function Chat() {
       <Navbar />
       <br />
       <h2>Add product for sale</h2>
-      <h1> help </h1>
+      <h1> im awesome </h1>
     </>
   );
 }
