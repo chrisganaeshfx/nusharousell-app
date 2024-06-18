@@ -1,0 +1,45 @@
+.footer {
+    background-color: #f1f1f1; /* Light grey background */
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.footer .logo {
+    flex: 1;
+    text-align: center;
+}
+
+.footer .logo img {
+    max-width: 100px; /* Adjust the size of the logo here */
+    height: auto;
+}
+
+.footer .About,
+.footer .Creators,
+.footer .Links {
+    flex: 1;
+    margin: 0 20px;
+}
+
+.footer h3 {
+    margin-bottom: 10px;
+    color: #333; /* Dark grey color for headings */
+}
+
+.footer p {
+    color: #666; /* Lighter grey for text */
+    line-height: 1.6; /* Improve readability */
+}
+
+.footer a {
+    display: block;
+    color: #007bff; /* Blue color for links */
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}

@@ -23,8 +23,7 @@ export default function Navbar({ searchproduct }) {
       <div className="header">
         <div className="left_header">
           <b>
-            {" "}
-            <a href="/"><img src={horizlogo} alt="logo" /></a>{" "}
+            <a href="/"><img src={horizlogo} alt="logo" /></a>
           </b>
         </div>
         <div className="mid_header">

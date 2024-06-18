@@ -15,12 +15,12 @@
     font-size: 30px;
   }
   
+  
+
   /* Left header section */
-  .left_header a {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    color: #FF6600;
+  .left_header a img {
+    max-width: 500px; /* Adjust the size of the logo here */
+    height: auto;
   }
   
   /* Middle header section (search box) */

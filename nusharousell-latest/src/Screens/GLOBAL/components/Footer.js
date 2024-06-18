@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../assets/logos/pic.png';
+import "./Footer.css";
 
 export default function Footer(){
     return(
@@ -16,15 +17,15 @@ export default function Footer(){
             </div>
             <div className='Creators'>
                 <h3>Creators</h3>
-                <a href="#">Chris</a>
-                <a href="#">Eunice</a>
+                <a href="https://github.com/chrisganaeshfx">Chris</a>
+                <a href="https://github.com/Eun18">Eunice</a>
             </div>
             <div className='Links'>
-                <a href="#">Home</a>
+                <h3>Links</h3>
+                <a href="/">Home</a>
                 <a href="#">Chats</a>
                 <a href="#">Categories</a>
             </div>            
         </div>
     );
-
 }
