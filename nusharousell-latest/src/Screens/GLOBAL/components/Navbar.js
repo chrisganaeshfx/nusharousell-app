@@ -4,6 +4,7 @@ import { FaSearch, FaRegHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { MdChatBubbleOutline } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
+import horizlogo from '../assets/logos/horizontal-logo.png';
 
 export default function Navbar({ searchproduct }) {
   const [search, setSearch] = useState("");
@@ -23,7 +24,7 @@ export default function Navbar({ searchproduct }) {
         <div className="left_header">
           <b>
             {" "}
-            <a href="/">NUSharousell</a>{" "}
+            <a href="/"><img src={horizlogo} alt="logo" /></a>{" "}
           </b>
         </div>
         <div className="mid_header">
