@@ -11,5 +11,3 @@ root.render(
     <App />
   </StrictMode>
 );
-
-//might nid to delete strictmode

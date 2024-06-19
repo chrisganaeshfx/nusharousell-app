@@ -10,7 +10,6 @@ export default function Homepage({user, setUser}) {
   return (
     <div className='home'>
       <Navbar className='header' user={user} setUser={setUser} defaultSearch={null}/>
-      <EnvironmentFact />
       <Category />
       <Recommendations />
       <Footer className='footer'/>
