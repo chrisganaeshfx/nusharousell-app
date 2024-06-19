@@ -4,7 +4,7 @@ import image from "../GLOBAL/assets/product-images/images.png";
 import "./ProductDetail.css";
 import { FaRegHeart } from "react-icons/fa";
 //
-function ProductDetail() {
+export default function ProductDetail() {
   return (
     <>
       <Navbar />
@@ -40,5 +40,3 @@ function ProductDetail() {
     </>
   );
 }
-
-export { ProductDetail };

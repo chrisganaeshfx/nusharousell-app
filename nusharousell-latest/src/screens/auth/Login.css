@@ -1,36 +1,91 @@
+/* General style */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+/* Container for the login form */
 .container {
-  max-width: 400px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
+  margin: 50px auto;
   padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 10px;
   background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.form-group {
+/* Title */
+.container h2 {
+  text-align: center;
   margin-bottom: 20px;
+  font-size: 3em;
+  color: #333;
 }
 
-label {
-  font-weight: bold;
+/* Form group */
+.form-group {
+  display: flex;
+  flex-direction: column;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 8px;
+/* Labels */
+.form-group label {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+/* Input fields */
+.form-control {
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.btn-mybtn {
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 1.3em;
   width: 100%;
 }
 
-@media (max-width: 576px) {
-  .container {
-    width: 100%;
-    padding: 10px;
-  }
+/* Submit button */
+.btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 2em;
+  cursor: pointer;
+  background-color: #28a745;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #218838;
+}
+
+/* Error message */
+.error-msg {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Link to signup */
+span {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+span a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+span a:hover {
+  text-decoration: underline;
 }

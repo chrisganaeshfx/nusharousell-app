@@ -5,7 +5,7 @@ import "./AddProduct.css";
 import Navbar from "../GLOBAL/components/Navbar";
 
 // add img part hold on cos nid firebase or sth
-function NewProduct({ product, setProduct }) {
+export default function AddProduct({ product, setProduct }) {
   const [productName, setProductName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
@@ -115,5 +115,3 @@ function NewProduct({ product, setProduct }) {
     </>
   );
 }
-
-export { NewProduct };

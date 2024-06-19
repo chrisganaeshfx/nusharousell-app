@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { auth, db} from "../../config/firebase";
+import { auth } from "../../config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import './Login.css';
 // import SignInwithGoogle from "./signInWIthGoogle";
 
-export const Login = () => {
+export default function Login() {
 
   const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,7 +17,7 @@ export const Login = () => {
       setEmail('');
       setPassword('');
       setError('');
-      navigate('/');
+      window.location.href = '/';
     } catch (err) {
       setError(err.message);
     }
@@ -63,10 +62,8 @@ export const Login = () => {
 			<br />
 			<span>
 				Don't have an account? Register
-				<Link to='signup'> Here</Link>
+				<a onClick={() => window.location.href = '/signup'}></a>;
 			</span>
 		</div>
 	);
 };
-
-export default Login;
