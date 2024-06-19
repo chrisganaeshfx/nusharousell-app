@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import Navbar from "../global/components/Navbar";
+import Navbar from "../GLOBAL/components/Navbar";
 import EnvironmentFact from "./components/EnvironmentFact";
 import Category from "./components/Category";
 import Recommendations from "./components/Recos";
-import Footer from "../global/components/Footer";
+import Footer from "../GLOBAL/components/Footer";
 
 function Home() {
   return (

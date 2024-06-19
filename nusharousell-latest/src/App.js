@@ -1,12 +1,12 @@
 import React, { useState } from "react";
+import { auth, firestore } from './config/firebase';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Home } from "./screens/homepage/Homepage";
+import { Login } from "./screens/auth/Login";
+import { Signup } from "./screens/auth/Signup";
 import { NewProduct } from "./screens/sell-product/AddProduct";
 import { ProductDetail } from "./screens/product-view/ProductDetail";
 import { Chat } from "./screens/chats/Chat";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./screens/auth/Login";
-import Signup from "./screens/auth/Signup";
-import { auth, db } from './config/firebase';
 
 export default function App() {
   const [product, setProduct] = useState([]);
