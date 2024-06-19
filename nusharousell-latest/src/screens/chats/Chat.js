@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../GLOBAL/components/Navbar";
+import Navbar from "../global/components/Navbar";
 
 function Chat() {
   return (

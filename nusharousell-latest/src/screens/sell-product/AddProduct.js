@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ProductList from "./ProductList";
 import Dropdown from "./Dropdown";
 import "./AddProduct.css";
-import Navbar from "../GLOBAL/components/Navbar";
+import Navbar from "../global/components/Navbar";
 
 // add img part hold on cos nid firebase or sth
 function NewProduct({ product, setProduct }) {
