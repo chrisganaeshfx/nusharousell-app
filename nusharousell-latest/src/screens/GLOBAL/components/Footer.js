@@ -23,7 +23,7 @@ export default function Footer(){
             <div className='Links'>
                 <h3>Links</h3>
                 <a href="/">Home</a>
-                <a href="#">Chats</a>
+                <a href="/screens/chats/Chat">Chats</a>
                 <a href="#">Categories</a>
             </div>            
         </div>
