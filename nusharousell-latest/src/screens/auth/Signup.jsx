@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
+import './Signup.css';
 
-export const Signup = (props) => {
+export default function Signup({props}) {
 	// defining state
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
-  const navigate = useNavigate();
 
 	// processing signup
 	const handleSignup = async (e) => {
 		e.preventDefault();
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(collection(db, 'Users'), cred.user.uid), {
+      await setDoc(doc(db, 'Users', cred.user.uid), {
         Name: name,
         Email: email,
         Password: password,
@@ -26,7 +25,7 @@ export const Signup = (props) => {
       setEmail('');
       setPassword('');
       setError('');
-      navigate('/login');
+      window.location.href = '/login';
 			} catch (err) {
         setError(err.message);
       }
@@ -99,12 +98,10 @@ export const Signup = (props) => {
 				{error && <span className='error-msg'>{error}</span>}
 				<br />
 				<span>
-					Already have an account? Login
-					<Link to='login'> Here</Link>
+					Already have an account? Login 
+          <a onClick={() => window.location.href = '/login'}></a>;
 				</span>
 			</div>
 		</>
 	);
-};
-
-export default Signup;
+}

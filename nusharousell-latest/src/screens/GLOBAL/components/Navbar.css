@@ -9,40 +9,46 @@
   /* Header container */
   .header {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 0px;
     font-size: 30px;
   }
   
   
-
+  .top-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0;
+  }
+  
   /* Left header section */
   .leftside-header a img {
-    max-width: 500px; /* Adjust the size of the logo here */
+    max-width: 300px; /* Adjust the size of the logo here */
     height: auto;
   }
   
   /* Middle header section (search box) */
-  .middle-header {
+  .bottom-header {
     display: flex;
-    align-items: center;
     flex: 1;
     justify-content: center;
   }
   
   .midddle-header .search_box {
     display: flex;
-    align-items: center;
+    align-items: left;
   }
   
-  .middle-header .search_box input {
+  .bottom-header .search_box input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
   }
   
-  .middle-header .search_box button {
+  .bottom-header .search_box button {
     padding: 10px;
     background: #EEEEEE;
     border: none;
@@ -54,6 +60,7 @@
   .rightside-header {
     display: flex;
     align-items: center;
+    margin-right: 20px;
   }
   
   .rightside-header a {

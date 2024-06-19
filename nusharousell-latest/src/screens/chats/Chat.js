@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../GLOBAL/components/Navbar";
 
-function Chat() {
+export default function Chat() {
   return (
     <>
       <Navbar />
@@ -11,4 +11,3 @@ function Chat() {
     </>
   );
 }
-export { Chat };

@@ -1,23 +1,20 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Navbar from "../GLOBAL/components/Navbar";
 import EnvironmentFact from "./components/EnvironmentFact";
 import Category from "./components/Category";
 import Recommendations from "./components/Recos";
 import Footer from "../GLOBAL/components/Footer";
+import "./Homepage.css";
 
-function Home() {
+export default function Homepage({user, setUser}) {
   return (
-    <>
-      <Navbar />
-      <br />
+    <div className='home'>
+      <Navbar className='header' user={user} setUser={setUser} defaultSearch={null}/>
       <EnvironmentFact />
-      <br />
       <Category />
-      <br />
       <Recommendations />
-      <br />
-      <Footer />
-    </>
+      <Footer className='footer'/>
+    </div>
   );
 }
-export { Home };
+
