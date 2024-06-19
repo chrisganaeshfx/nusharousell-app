@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, doc, setDoc } from 'firebase/firestore';
-import './Signup.css';
 
 export const Signup = (props) => {
 	// defining state

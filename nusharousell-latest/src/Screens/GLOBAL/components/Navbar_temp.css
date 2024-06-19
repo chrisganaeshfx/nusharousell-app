@@ -18,31 +18,31 @@
   
 
   /* Left header section */
-  .left_header a img {
+  .leftside-header a img {
     max-width: 500px; /* Adjust the size of the logo here */
     height: auto;
   }
   
   /* Middle header section (search box) */
-  .mid_header {
+  .middle-header {
     display: flex;
     align-items: center;
     flex: 1;
     justify-content: center;
   }
   
-  .mid_header .search_box {
+  .midddle-header .search_box {
     display: flex;
     align-items: center;
   }
   
-  .mid_header .search_box input {
+  .middle-header .search_box input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
   }
   
-  .mid_header .search_box button {
+  .middle-header .search_box button {
     padding: 10px;
     background: #EEEEEE;
     border: none;
@@ -51,12 +51,12 @@
   }
   
   /* Right header section */
-  .right_header {
+  .rightside-header {
     display: flex;
     align-items: center;
   }
   
-  .right_header a {
+  .rightside-header a {
     font-size: 20px;
     text-decoration: none;
     margin-left: 10px;
@@ -67,11 +67,11 @@
     color: black;
   }
 
-  .right_header.dropdown {
+  .rightside-header.dropdown {
     position: relative;
   }
 
-  .right_header.dropdown .dropbtn {
+  .rightside-header.dropdown .dropbtn {
     font-size: 16px;
     border: none;
     outline: none;
@@ -80,7 +80,7 @@
     background-color: inherit;
   }
 
-  .right_header a:hover, .dropdown:hover .dropbtn {
+  .rightside-header a:hover, .dropdown:hover .dropbtn {
     background-color: red;
   }
 
