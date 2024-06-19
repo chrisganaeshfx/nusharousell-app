@@ -1,5 +1,5 @@
 import React from "react";
-import image from "../../GLOBAL/assets/product-images/images.png";
+import image from "../../global/assets/product-images/images.png";
 
 export default function Recommendations() {
   return (

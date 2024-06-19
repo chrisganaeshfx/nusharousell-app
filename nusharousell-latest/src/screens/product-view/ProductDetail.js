@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../GLOBAL/components/Navbar";
-import image from "../GLOBAL/assets/product-images/images.png";
+import Navbar from "../global/components/Navbar";
+import image from "../global/assets/product-images/images.png";
 import "./ProductDetail.css";
 import { FaRegHeart } from "react-icons/fa";
 //

@@ -4,7 +4,9 @@ import { NewProduct } from "./screens/sell-product/AddProduct";
 import { ProductDetail } from "./screens/product-view/ProductDetail";
 import { Chat } from "./screens/chats/Chat";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
+import Login from "./screens/auth/Login";
+import Signup from "./screens/auth/Signup";
+import { auth, db } from './config/firebase';
 
 export default function App() {
   const [product, setProduct] = useState([]);
@@ -17,6 +19,8 @@ export default function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route
             path="/screens/sell-product/AddProduct"
             element={<NewProduct product={product} setProduct={setProduct} />}
@@ -26,6 +30,7 @@ export default function App() {
             element={<ProductDetail />}
           />
           <Route path="/screens/chats/Chat" element={<Chat />} />
+          
         </Routes>
       </div>
     </Router>
