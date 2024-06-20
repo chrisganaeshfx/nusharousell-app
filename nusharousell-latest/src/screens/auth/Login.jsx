@@ -62,7 +62,7 @@ export default function Login() {
 			<br />
 			<span>
 				Don't have an account? Register
-				<a onClick={() => window.location.href = '/signup'}></a>;
+				<a href='./signup'> Here</a>
 			</span>
 		</div>
 	);

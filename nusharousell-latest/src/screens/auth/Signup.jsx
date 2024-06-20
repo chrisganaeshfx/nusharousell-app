@@ -99,7 +99,7 @@ export default function Signup({props}) {
 				<br />
 				<span>
 					Already have an account? Login 
-          <a onClick={() => window.location.href = '/login'}></a>;
+          <a href='./login'> Here</a>;
 				</span>
 			</div>
 		</>
