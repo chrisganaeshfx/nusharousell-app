@@ -24,7 +24,8 @@ export default function Signup({props}) {
         lastName: '',
         bio: '',
         phoneNumber: null,
-        photoUrl: null
+        photoUrl: null,
+        createdAt: new Date()
       });
       setUsername('');
       setEmail('');
