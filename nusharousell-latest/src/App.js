@@ -5,12 +5,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Homepage from "./screens/homepage/Homepage";
 import Login from "./screens/auth/Login";
 import Signup from "./screens/auth/Signup";
-import AddProduct from "./screens/sell-product/AddProduct";
-import ProductDetail from "./screens/product-view/ProductDetail";
+import AddProduct from "./screens/sell/AddProduct";
+import ProductDetail from "./screens/productpage/ProductDetail";
 import Profile from "./screens/profile/Profile";
 import Chat from "./screens/chats/Chat";
-import Navbar from "./screens/GLOBAL/components/Navbar";
-import Footer from "./screens/GLOBAL/components/Footer";
 
 export default function App() {
   
