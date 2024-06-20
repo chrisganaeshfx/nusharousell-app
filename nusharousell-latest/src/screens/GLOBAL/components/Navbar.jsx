@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { auth } from '../../../config/firebase';
-import './Navbar.css';
+import '../../styles/Navbar.css';
+import Profile from '../../profile/Profile';
 import logo from '../assets/logos/logo-horizontal.png';
 import { FaSearch, FaRegHeart } from 'react-icons/fa';
 import { MdChatBubbleOutline } from 'react-icons/md';
@@ -40,7 +41,7 @@ export default function Navbar({ user, setUser, defaultSearch }) {
             <div className='dropdown'>
               <a className='dropbtn'>Hello, {user.Name} <CgProfile /></a>
               <div className='dropdown-content'>
-                <a href='#'>Profile </a>
+                <a onClick={() => window.location.href ='/profile'}>Profile </a>
                 <a href='#'>Manage Listings</a>
                 <a href='#'>Settings</a>
                 <a onClick={() => {

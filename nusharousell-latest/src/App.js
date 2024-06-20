@@ -7,6 +7,7 @@ import Login from "./screens/auth/Login";
 import Signup from "./screens/auth/Signup";
 import AddProduct from "./screens/sell-product/AddProduct";
 import ProductDetail from "./screens/product-view/ProductDetail";
+import Profile from "./screens/profile/Profile";
 import Chat from "./screens/chats/Chat";
 
 export default function App() {
@@ -32,7 +33,7 @@ export default function App() {
         } catch(err) {
           setError(err.message);
           // To place somewhere!!
-          // {error && <span className='error-msg'>{error}</span>}
+          // {error && <span className='error-msg'>{error}</span>} 
         }
       }
     });
@@ -51,6 +52,7 @@ export default function App() {
           <Route path="/addproduct" element={<AddProduct product={product} setProduct={setProduct} />}/>
           <Route path="/productdetail" element={<ProductDetail />}/>
           <Route path="/chat" element={<Chat />} />
+          <Route path="/profile" element={<Profile user={user}/>}/>
         </Routes>
       </div>
     </Router>
