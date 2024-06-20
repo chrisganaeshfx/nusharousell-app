@@ -7,6 +7,7 @@ import Login from "./screens/auth/Login";
 import Signup from "./screens/auth/Signup";
 import AddProduct from "./screens/sell-product/AddProduct";
 import ProductDetail from "./screens/product-view/ProductDetail";
+import Profile from "./screens/profile/Profile";
 import Chat from "./screens/chats/Chat";
 import Navbar from "./screens/GLOBAL/components/Navbar";
 import Footer from "./screens/GLOBAL/components/Footer";
@@ -34,7 +35,7 @@ export default function App() {
         } catch(err) {
           setError(err.message);
           // To place somewhere!!
-          // {error && <span className='error-msg'>{error}</span>}
+          // {error && <span className='error-msg'>{error}</span>} 
         }
       }
     });
@@ -46,18 +47,15 @@ export default function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar className='header' user={user} setUser={setUser} defaultSearch={null}/>
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Homepage user={user} setUser={setUser}/>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/addproduct" element={<AddProduct product={product} setProduct={setProduct} />}/>
-            <Route path="/productdetail" element={<ProductDetail />}/>
-            <Route path="/chat" element={<Chat />} />
-          </Routes>
-        </div>
-        <Footer />
+        <Routes>
+          <Route path="/" element={<Homepage user={user} setUser={setUser}/>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/addproduct" element={<AddProduct user={user} product={product} setProduct={setProduct} />}/>
+          <Route path="/productdetail" element={<ProductDetail />}/>
+          <Route path="/chat" element={<Chat user={user}/>} />
+          <Route path="/profile" element={<Profile user={user}/>}/>
+        </Routes>
       </div>
     </Router>
   );

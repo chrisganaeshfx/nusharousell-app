@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../GLOBAL/components/Navbar";
-import image from "../GLOBAL/assets/logos/images.png";
-//import "./ProductDetail.css";
+import image from "../GLOBAL/assets/product-images/images.png";
+import "../styles/ProductDetail.css";
 import { FaRegHeart } from "react-icons/fa";
 //
 export default function ProductDetail() {

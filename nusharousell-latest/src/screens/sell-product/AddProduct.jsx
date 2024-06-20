@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import ProductList from "./ProductList";
 import Dropdown from "./Dropdown";
-// import "./AddProduct.css";
+import "../styles/AddProduct.css";
+import Navbar from "../GLOBAL/components/Navbar";
 
 // add img part hold on cos nid firebase or sth
-export default function AddProduct({ product, setProduct }) {
+export default function AddProduct({ user, product, setProduct }) {
   const [productName, setProductName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
@@ -13,7 +14,7 @@ export default function AddProduct({ product, setProduct }) {
   const [img, setImg] = useState(null);
   const [location, setLocation] = useState("");
   const [error, setError] = useState("");
-  const types = ["image/png", "image/jpeg"];
+  const types = ["image/png", "image/jpeg", "image/jpg"];
 
   const imgHandler = (e) => {
     let file = e.target.files[0];

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { auth, db } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import './Signup.css';
+import '../styles/Signup.css';
 
 export default function Signup({props}) {
 	// defining state
