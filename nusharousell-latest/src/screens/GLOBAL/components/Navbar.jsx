@@ -36,10 +36,8 @@ export default function Navbar({ user, setUser, defaultSearch }) {
         </div>
         {user ? (
           <div className='rightside-header'>
-            <a href='/'><FaRegHeart /></a>
-            <a onClick={() => window.location.href = '/chats'}><MdChatBubbleOutline /></a>
             <div className='dropdown'>
-              <a className='dropbtn'>Hello, {user.Name} <CgProfile /></a>
+              <a className='dropbtn'>Hello, {user.username} <CgProfile /></a>
               <div className='dropdown-content'>
                 <a onClick={() => window.location.href ='/profile'}>Profile </a>
                 <a href='#'>Manage Listings</a>
@@ -50,6 +48,8 @@ export default function Navbar({ user, setUser, defaultSearch }) {
                   }}>Logout</a>
               </div>
             </div>
+            <a href='/'><FaRegHeart /></a>
+            <a onClick={() => window.location.href = '/chats'}><MdChatBubbleOutline /></a>
             <a onClick={() => window.location.href = '/addproduct'}>Sell</a>
           </div>
         ) : (

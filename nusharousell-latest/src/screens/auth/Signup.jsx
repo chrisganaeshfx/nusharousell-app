@@ -6,7 +6,7 @@ import '../styles/Signup.css';
 
 export default function Signup({props}) {
 	// defining state
-	const [name, setName] = useState('');
+	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
@@ -17,11 +17,17 @@ export default function Signup({props}) {
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       await setDoc(doc(db, 'Users', cred.user.uid), {
-        Name: name,
-        Email: email,
-        Password: password,
+        username: username,
+        email: email,
+        password: password,
+        firstName: '',
+        lastName: '',
+        bio: '',
+        phoneNumber: null,
+        photoUrl: null,
+        createdAt: new Date()
       });
-      setName('');
+      setUsername('');
       setEmail('');
       setPassword('');
       setError('');
@@ -45,16 +51,16 @@ export default function Signup({props}) {
 						<label
 							htmlFor='name'
 							className='form-label'>
-							Name
+							Username
 						</label>
 						<input
 							type='text'
-							id='name'
+							id='username'
 							className='form-control'
-              placeholder='Enter name'
+              placeholder='Enter username'
 							required
-							onChange={(e) => setName(e.target.value)}
-							value={name}
+							onChange={(e) => setUsername(e.target.value)}
+							value={username}
 						/>
 					</div>
 					<div className='mb-3'>
