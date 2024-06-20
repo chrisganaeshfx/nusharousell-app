@@ -9,6 +9,8 @@ import AddProduct from "./screens/sell-product/AddProduct";
 import ProductDetail from "./screens/product-view/ProductDetail";
 import Profile from "./screens/profile/Profile";
 import Chat from "./screens/chats/Chat";
+import Navbar from "./screens/GLOBAL/components/Navbar";
+import Footer from "./screens/GLOBAL/components/Footer";
 
 export default function App() {
   

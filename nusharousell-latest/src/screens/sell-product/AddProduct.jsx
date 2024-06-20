@@ -48,7 +48,6 @@ export default function AddProduct({ user, product, setProduct }) {
 
   return (
     <>
-      <Navbar />
       <br />
       <h2>Add product for sale</h2>
       <form className="inputs" onSubmit={handleAddProduct}>

@@ -7,7 +7,6 @@ import { FaRegHeart } from "react-icons/fa";
 export default function ProductDetail() {
   return (
     <>
-      <Navbar />
       <br />
       <div className="product-info">
         <img src={image} alt="recco1" />

@@ -92,6 +92,20 @@ body {
     margin-left: 10px;
 }
 
+.header {
+    flex-shrink: 0;
+  }
+  
+content {
+    flex: 1;
+    padding: 20px; /* Optional padding */
+}
+  
+footer {
+    flex-shrink: 0;
+}
+
+
 /* products */
 
 h1 {
