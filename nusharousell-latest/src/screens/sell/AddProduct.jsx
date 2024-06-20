@@ -33,7 +33,7 @@ export default function AddProduct({ user, product, setProduct }) {
 	const handleAddProduct = async (e) => {
 		e.preventDefault(); // Prevents refreshing
 		const productID = uuidv4();
-		const imageRef = ref(storage, `product-images/${image.name}_${user.email}`);
+		const imageRef = ref(storage, `product-images/${image.name}_${productID}`);
 		const uploadTask = uploadBytesResumable(imageRef, image);
 		uploadTask.on(
 			'state_changed',
@@ -47,6 +47,7 @@ export default function AddProduct({ user, product, setProduct }) {
 					const imageUrl = await getDownloadURL(imageRef);
 					await setDoc(doc(db, 'Products', productID), {
             sellerUsername: user.username,
+            sellerID: user.userId,
             sellerEmail: user.email,
 						productID: productID,
 						productName: productName,
