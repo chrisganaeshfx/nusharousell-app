@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { auth, db } from '../../config/firebase';
+import { v4 as uuidv4 } from 'uuid';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import '../styles/Signup.css';
@@ -15,9 +16,11 @@ export default function Signup({props}) {
 	const handleSignup = async (e) => {
 		e.preventDefault();
     try {
+      const userId = uuidv4();
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       await setDoc(doc(db, 'Users', cred.user.uid), {
         username: username,
+        userId: userId,
         email: email,
         password: password,
         firstName: '',
