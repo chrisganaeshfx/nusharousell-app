@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import ProductList from "./ProductList";
 import Dropdown from "./Dropdown";
-import "./AddProduct.css";
-import Navbar from "../GLOBAL/components/Navbar";
+// import "./AddProduct.css";
 
 // add img part hold on cos nid firebase or sth
 export default function AddProduct({ product, setProduct }) {
@@ -48,7 +47,6 @@ export default function AddProduct({ product, setProduct }) {
 
   return (
     <>
-      <Navbar />
       <br />
       <h2>Add product for sale</h2>
       <form className="inputs" onSubmit={handleAddProduct}>

@@ -40,7 +40,7 @@ export default function Navbar({ user, setUser, defaultSearch }) {
             <div className='dropdown'>
               <a className='dropbtn'>Hello, {user.Name} <CgProfile /></a>
               <div className='dropdown-content'>
-                <a href='#'>Profile </a>
+                <a href='./profile/Profile'>Profile </a>
                 <a href='#'>Manage Listings</a>
                 <a href='#'>Settings</a>
                 <a onClick={() => {
