@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import ProductList from "./ProductList";
 import Dropdown from "./Dropdown";
+import { v4 as uuidv4 } from 'uuid';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { setDoc, doc } from "firebase/firestore";
+import { db, storage } from "../../config/firebase";
 import "../styles/AddProduct.css";
-import Navbar from "../GLOBAL/components/Navbar";
 
 // add img part hold on cos nid firebase or sth
-export default function AddProduct({ user, product, setProduct }) {
+export default function AddProduct({ product, setProduct }) {
   const [productName, setProductName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
@@ -14,7 +17,7 @@ export default function AddProduct({ user, product, setProduct }) {
   const [img, setImg] = useState(null);
   const [location, setLocation] = useState("");
   const [error, setError] = useState("");
-  const types = ["image/png", "image/jpeg", "image/jpg"];
+  const types = ["image/png", "image/jpeg"];
 
   const imgHandler = (e) => {
     let file = e.target.files[0];
@@ -27,24 +30,41 @@ export default function AddProduct({ user, product, setProduct }) {
     }
   };
 
-  function handleAddProduct(e) {
+  const handleAddProduct = async (e) => {
     e.preventDefault(); // Prevents refreshing
-    const newProduct = {
-      productName,
-      category,
-      price,
-      condition,
-      description,
-      location,
-    };
-    setProduct([newProduct, ...product]);
-    // Reset all input fields after submitting
-    setProductName("");
-    setCategory("");
-    setPrice("");
-    setCondition("");
-    setDescription("");
-  }
+    const productID = uuidv4();
+    const storageRef = ref(storage, `product-images/${img.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, img);
+    uploadTask.on('state_changed',snapshot => {
+      const progress = (snapshot.bytesTransferred /snapshot.totalBytes) * 100;
+      console.log(progress);
+    }, err => setError(err.message),
+      async () => {
+        try {
+          const url = await getDownloadURL(uploadTask.snapshot.ref);
+          await setDoc(doc(db, 'Products', productID), {
+                ProductID: productID,
+                ProductName: productName,
+                ProductPrice: Number(price),
+                ProductCategory: category,
+                ProductCondition: condition,
+                ProductDescription: description,
+                ProductLocation: location,
+                ProductImg: url
+              });
+
+                setProductName("");
+                setPrice(0);
+                setCategory("");
+                setCondition("");
+                setDescription("");
+                setLocation("");
+                setImg(null);
+                setError("");
+                document.getElementById('file').value = "";
+              } catch(err) {setError(err.message);}
+            });
+    }
 
   return (
     <>
@@ -106,7 +126,7 @@ export default function AddProduct({ user, product, setProduct }) {
           options={["Kent Ridge MRT", "Temasek Hall", "UTown"]}
           onChange={setLocation}
         />
-        <button type="submit" onClick={(e) => handleAddProduct(e)}>
+        <button type="submit" className='btn btn-success btn-md mybtn'>
           Submit
         </button>
       </form>
