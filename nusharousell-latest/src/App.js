@@ -49,9 +49,9 @@ export default function App() {
           <Route path="/" element={<Homepage user={user} setUser={setUser}/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/addproduct" element={<AddProduct product={product} setProduct={setProduct} />}/>
+          <Route path="/addproduct" element={<AddProduct user={user} product={product} setProduct={setProduct} />}/>
           <Route path="/productdetail" element={<ProductDetail />}/>
-          <Route path="/chat" element={<Chat />} />
+          <Route path="/chat" element={<Chat user={user}/>} />
           <Route path="/profile" element={<Profile user={user}/>}/>
         </Routes>
       </div>
