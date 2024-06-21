@@ -24,18 +24,19 @@ export default function EditProfile({ user, userDetails }) {
   };
 
   console.log('Updated user details: ', updatedUserDoc);
+  console.log('newImageFile is', newImageFile);
 
 	const imageHandler = (e) => {
-		const types = ['image/png', 'image/jpeg'];
-		let file = e.target.files[0];
-		if (file && types.includes(file.type)) {
-			setNewImageFile(file);
-			setError('');
-		} else {
-			setNewImageFile(null);
-			setError('Please select a valid image type (jpg or png)');
-		}
-	};
+    const types = ['image/png', 'image/jpeg'];
+    let file = e.target.files[0];
+    if (file && types.includes(file.type)) {
+        setNewImageFile(file);
+        setError('');
+    } else {
+        setNewImageFile(null);
+        setError('Please select a valid image type (jpg or png)');
+    }
+  };
 
 	const userImageUploader = (newImageFile, userId) => {
 		if (!newImageFile) {
@@ -80,6 +81,7 @@ export default function EditProfile({ user, userDetails }) {
 			await updateDoc(userDoc, updatedUserDoc);
       const latestUserDoc = await getDoc(userDoc);
 			console.log('Successfully updated user profile to ', latestUserDoc.data());
+      window.location.href = '/profile';
 		} catch (err) {
 			setError(err.message);
 			console.error('Error updating profile:', err.message);
@@ -99,9 +101,7 @@ export default function EditProfile({ user, userDetails }) {
 				<h5>Profile Photo</h5>
 				<input
 					type='file'
-					id='file'
-					onChange={imageHandler}
-				/>
+          onChange={imageHandler}/>
 				{newImageFile ? (
 					<button
 						type='button'

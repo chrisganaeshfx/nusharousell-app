@@ -10,6 +10,7 @@ import ProductDetail from './screens/productpage/ProductDetail';
 import Profile from './screens/profile/Profile';
 import EditProfile from './screens/profile/EditProfile';
 import Chat from './screens/chats/Chat';
+import Test from './screens/test/Test';
 
 export default function App() {
 	const [product, setProduct] = useState([]);
@@ -117,6 +118,10 @@ export default function App() {
 						path='*'
 						element={<h1>Error 404: Your Mother Not Found</h1>}
 					/>
+          <Route 
+            path='/test'
+            element={<Test />}
+          />
 				</Routes>
 			</div>
 		</Router>

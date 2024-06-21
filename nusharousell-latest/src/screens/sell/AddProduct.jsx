@@ -89,6 +89,7 @@ export default function AddProduct({ user, userDetails, product, setProduct }) {
       setImage(null);
       setError('');
       document.getElementById('file').value = '';
+      window.location.href = '/';
     } catch (err) {
       setError(err.message);
     }

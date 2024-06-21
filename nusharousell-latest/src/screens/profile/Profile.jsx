@@ -21,7 +21,7 @@ export default function Profile({ user, userDetails }) {
         <p><IoMdMail />: {userDetails.email}</p>
         <p><FaPhoneAlt />: +65 {Number(userDetails.phoneNumber)}</p>
         <p><FaStar />: {userDetails.rating}/5.0</p>
-        <p><FaSchool />: {userDetails.location}</p>
+        <p><FaSchool />: {userDetails.meetupLocation}</p>
         <button><a onClick={() => window.location.href = '/profile/edit'}>Edit Profile</a></button>
       </div>
       <div className='listing-column'>
