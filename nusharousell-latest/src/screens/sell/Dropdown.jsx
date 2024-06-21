@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Dropdown({ label, value, options, onChange }) {
+export default function Dropdown({ label, value, options, onChange }) {
   return (
     <div className="pdtdropdown">
       <label htmlFor={label.toLowerCase()}>{label}</label>
@@ -19,5 +19,3 @@ function Dropdown({ label, value, options, onChange }) {
     </div>
   );
 }
-
-export default Dropdown;
