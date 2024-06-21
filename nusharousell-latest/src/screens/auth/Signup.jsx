@@ -7,7 +7,7 @@ import '../styles/Signup.css';
 
 export default function Signup({props}) {
 	// defining state
-	const [username, setUsername] = useState('');
+	const [userName, setUserName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
@@ -16,21 +16,21 @@ export default function Signup({props}) {
 	const handleSignup = async (e) => {
 		e.preventDefault();
     try {
-      const userId = uuidv4();
       const cred = await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(db, 'Users', cred.user.uid), {
-        username: username,
-        userId: userId,
+      const userDoc = doc(db, 'Users', cred.user.uid);
+      await setDoc(userDoc, {
+        userName: userName,
         email: email,
         password: password,
         firstName: '',
         lastName: '',
-        bio: '',
-        phoneNumber: null,
-        photoUrl: null,
+        phoneNumber: '',
+        imageUrl: '',
+        ratings: 0,
+        meetupLocation: '',
         createdAt: new Date()
       });
-      setUsername('');
+      setUserName('');
       setEmail('');
       setPassword('');
       setError('');
@@ -62,8 +62,8 @@ export default function Signup({props}) {
 							className='form-control'
               placeholder='Enter username'
 							required
-							onChange={(e) => setUsername(e.target.value)}
-							value={username}
+							onChange={(e) => setUserName(e.target.value)}
+							value={userName}
 						/>
 					</div>
 					<div className='mb-3'>

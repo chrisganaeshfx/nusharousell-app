@@ -6,10 +6,10 @@ import Recommendations from "./components/Recos";
 import Footer from "../GLOBAL/components/Footer";
 import "../styles/Homepage.css";
 
-export default function Homepage({user, setUser}) {
+export default function Homepage({ userDetails, setUserDetails }) {
   return (
     <div className='home'>
-      <Navbar className='header' user={user} setUser={setUser} defaultSearch={null}/>
+      <Navbar className='header' userDetails={userDetails} setUserDetails={setUserDetails}/>
       <EnvironmentFact />
       <Category />
       <Recommendations />
