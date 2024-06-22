@@ -8,6 +8,7 @@ import { FaSearch, FaRegHeart } from 'react-icons/fa';
 import { MdChatBubbleOutline } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
 
+
 export default function Navbar({ userDetails, setUserDetails }) {
 
 	const [search, setSearch] = useState('');
