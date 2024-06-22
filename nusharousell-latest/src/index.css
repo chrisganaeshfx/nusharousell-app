@@ -29,7 +29,7 @@ body {
     font-family: 'Open Sans', serif;
 }
 
-/* navbar */
+
 .navbox {
     display: flex;
     justify-content: space-between;
@@ -98,8 +98,9 @@ body {
   
 content {
     flex: 1;
-    padding: 20px; /* Optional padding */
+    padding: 20px;
 }
+
   
 footer {
     flex-shrink: 0;

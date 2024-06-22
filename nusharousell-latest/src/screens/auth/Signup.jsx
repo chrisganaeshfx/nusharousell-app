@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { auth, db } from '../../config/firebase';
-import { v4 as uuidv4 } from 'uuid';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import '../styles/Signup.css';

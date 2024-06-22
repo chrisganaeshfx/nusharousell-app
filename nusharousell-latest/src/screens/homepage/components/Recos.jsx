@@ -1,5 +1,4 @@
 import React, {useContext, useEffect} from "react";
-import image from "../../GLOBAL/assets/logos/images.png";
 import {ProductsContext} from '../../GLOBAL/components/ProductsContext';
 import { Link } from 'react-router-dom';
 
@@ -35,40 +34,3 @@ export const NewlyAdded = () => {
   
 export default NewlyAdded;
 
-
-
-
-
-/*
-        <figure>
-          <a onClick={() => window.location.href = '/productdetail'}>
-            <img src={image} alt="reco1" />
-            <figcaption>
-              {" "}
-              Item Name <br /> Price <br /> Condition <br /> Description{" "}
-            </figcaption>
-          </a>
-        </figure>
-        <figure>
-          <a onClick={() => window.location.href = '/productdetail'}>
-            <img src={image} alt="reco2" />
-            <figcaption>
-              {" "}
-              Item Name <br /> Price <br /> Condition <br /> Description
-            </figcaption>
-          </a>
-        </figure>
-        <figure>
-          <a onClick={() => window.location.href = '/productdetail'}>
-            <img src={image} alt="reco3" />
-            <figcaption>
-              {" "}
-              Item Name <br /> Price <br /> Condition <br /> Description
-            </figcaption>
-          </a>
-        </figure>
-      </div>
-    </div>
-  );
-}
-  */

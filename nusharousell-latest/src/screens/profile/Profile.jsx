@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {useContext, useEffect} from "react";
 import '../styles/Profile.css';
 import { IoMdMail } from "react-icons/io";
 import { FaPhoneAlt, FaStar, FaSchool } from "react-icons/fa";
+import {ProductsContext} from '../GLOBAL/components/ProductsContext';
+import { Link } from 'react-router-dom';
 
 export default function Profile({ user, userDetails }) {
   console.log('Current user: ', user);
   console.log('Current user details: ', userDetails);
   
+  const {products, fetchProducts} = useContext(ProductsContext);
+
+  useEffect(() => {
+    if (user) {
+      fetchProducts(user.uid,'createdAt', 'desc');
+    }
+  }, [fetchProducts,user]);
+
   if (!userDetails) {
     return <div>Loading...</div>;
   }
@@ -26,6 +36,20 @@ export default function Profile({ user, userDetails }) {
       </div>
       <div className='listing-column'>
         <h2>My Listings</h2>
+        <div className='l-image'>
+          {products.map(product => (
+            <div key={product.ProductID}>
+              <figure>
+                <Link to={`/productdetail/${product.productID}`}>
+                  <img src={product.productImage} alt="Image Not Found" />
+                  <figcaption>
+                    {product.productName} <br /> {product.productPrice} <br /> {product.productCondition} <br /> {product.sellerUserName}
+                  </figcaption>
+                </Link>
+              </figure>
+            </div>
+          ))}
+          </div>
         <br/>
       </div>
     </div>

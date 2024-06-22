@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { auth, db } from '../../../config/firebase';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, where} from 'firebase/firestore';
 
 export const ProductsContext = createContext();
 
@@ -9,6 +9,8 @@ export const ProductsContextProvider = ({ children }) => {
 
   const fetchProducts = async (orderByField = null, orderDirection = null) => {
     let q = collection(db, 'Products');
+
+
 
     if (orderByField && orderDirection) {
       q = query(q, orderBy(orderByField, orderDirection));
@@ -32,3 +34,7 @@ export const ProductsContextProvider = ({ children }) => {
     </ProductsContext.Provider>
   );
 };
+/*
+if (sellerID) {
+      q = query(q, where("sellerId", "==", sellerID));
+    }*/

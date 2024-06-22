@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import ProductList from './ProductList';
 import Dropdown from './Dropdown';
 import { v4 as uuidv4 } from 'uuid';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc, updateDoc } from 'firebase/firestore';
 import { db, storage } from '../../config/firebase';
 import '../styles/AddProduct.css';
 
@@ -79,6 +78,10 @@ export default function AddProduct({ user, userDetails, product, setProduct }) {
         productImage: imageUrl,
         createdAt: new Date(),
       });
+	  /*const userDocRef = doc(db, 'Users', user.uid);
+		await updateDoc(userDocRef, {
+		products: firebase.firestore.FieldValue.arrayUnion(productId), 
+		});*/
       setProductName('');
       setPrice(0);
       setCategory('');
@@ -160,10 +163,6 @@ export default function AddProduct({ user, userDetails, product, setProduct }) {
 				</button>
 			</form>
       {error && <span className='error-msg'>{error}</span>}
-			<ProductList
-				product={product}
-				setProduct={setProduct}
-			/>
 		</>
 	);
 }
