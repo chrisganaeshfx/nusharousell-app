@@ -61,3 +61,19 @@
 .listing-column h2 {
   margin-bottom: 20px;
 }
+
+.listing-column.l-image{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.listing-column.l-image figure figcaption{
+  color: black;
+}
+.listing-column.l-image figure a{
+text-decoration: none;
+}
+.listing-column.l-image figure a:hover{
+text-decoration: underline;
+}

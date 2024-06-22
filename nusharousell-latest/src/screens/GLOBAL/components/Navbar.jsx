@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { auth, db } from '../../../config/firebase';
-import { doc, getDoc } from "firebase/firestore";
+import { auth } from '../../../config/firebase';
 import '../../styles/Navbar.css';
-import Profile from '../../profile/Profile';
 import logo from '../assets/logos/horizontal-logo.png';
 import { FaSearch, FaRegHeart } from 'react-icons/fa';
 import { MdChatBubbleOutline } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
-
+import { Link } from 'react-router-dom';
 
 export default function Navbar({ userDetails, setUserDetails }) {
 
@@ -43,22 +41,22 @@ export default function Navbar({ userDetails, setUserDetails }) {
             <div className='dropdown'>
               <a className='dropbtn'>Hello, {userDetails.userName} <CgProfile /></a>
               <div className='dropdown-content'>
-                <a onClick={() => window.location.href ='/profile'}>Profile </a>
-                <a href='#'>Manage Listings</a>
-                <a href='#'>Settings</a>
+                <Link to="/profile">Profile</Link>
+                <Link to="/">Manage Listings</Link>
+                <Link to="/">Settings</Link>
                 <a onClick={() => {
                   handleLogout();
                   }}>Logout</a>
               </div>
             </div>
             <a href='/'><FaRegHeart /></a>
-            <a onClick={() => window.location.href = '/chats'}><MdChatBubbleOutline /></a>
-            <a onClick={() => window.location.href = '/addproduct'}>Sell</a>
+            <Link to="/chats"><MdChatBubbleOutline/></Link>
+            <Link to="/addproduct">Sell</Link>
           </div>
         ) : (
           <div className='rightside-header'>
-            <a onClick={() => window.location.href = '/login'}>Login</a>      
-            <a onClick={() => window.location.href = '/signup'}>Register</a>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Register</Link>
           </div>
         )}
       </div>       
@@ -78,4 +76,6 @@ export default function Navbar({ userDetails, setUserDetails }) {
   );
 }
 
+/*<a onClick={() => window.location.href = '/login'}>Login</a>      
+            <a onClick={() => window.location.href = '/signup'}>Register</a> */
 

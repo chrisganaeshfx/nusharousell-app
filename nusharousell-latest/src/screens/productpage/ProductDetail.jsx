@@ -3,7 +3,8 @@ import{useParams} from 'react-router-dom';
 import {db} from '../../config/firebase';
 import "../styles/ProductDetail.css";
 import { FaRegHeart } from "react-icons/fa";
-import { doc, collection } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 
 export default function ProductDetail() {
   const {productID} = useParams();
@@ -12,9 +13,10 @@ export default function ProductDetail() {
   useEffect(() => {
     const fetchProduct = async() => {
       try {
-        const docRef = await db.collection("Products").doc(productID).get();
-        if (docRef.exists){
-          setProduct(docRef.data());
+        const docRef = doc(db, "Products", productID);
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists){
+          setProduct(docSnapshot.data());
         } else {
           console.log("No such document!");
         }
@@ -24,8 +26,7 @@ export default function ProductDetail() {
     };
 
     fetchProduct();
-  }, [productID]
-);
+  }, [productID]);
 
   if (!product){
     return <div>Loading...</div>;
@@ -55,11 +56,8 @@ export default function ProductDetail() {
           <h4> Seller </h4>
           <p> {product.sellerUserName} </p>
           <br />
-          <a href="/Screens/chats/Chat">Chat with Seller</a>
-          <button>
-            {" "}
-            <FaRegHeart />{" "}
-          </button>
+          <Link to="/chat">Chat with seller</Link>
+          <Link to="/"><FaRegHeart /></Link>
         </div>
       </div>
     </>
