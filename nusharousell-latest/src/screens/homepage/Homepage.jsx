@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../GLOBAL/components/Navbar";
 import EnvironmentFact from "./components/EnvironmentFact";
 import Category from "./components/Category";
-import Recommendations from "./components/Recos";
+import NewlyAdded from "./components/Recos";
 import Footer from "../GLOBAL/components/Footer";
 import "../styles/Homepage.css";
 
@@ -12,7 +12,7 @@ export default function Homepage({ userDetails, setUserDetails }) {
       <Navbar className='header' userDetails={userDetails} setUserDetails={setUserDetails}/>
       <EnvironmentFact />
       <Category />
-      <Recommendations />
+      <NewlyAdded />
       <Footer className='footer'/>
     </div>
   );

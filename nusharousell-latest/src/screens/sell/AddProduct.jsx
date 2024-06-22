@@ -7,7 +7,6 @@ import { setDoc, doc } from 'firebase/firestore';
 import { db, storage } from '../../config/firebase';
 import '../styles/AddProduct.css';
 
-// add image part hold on cos nid firebase or sth
 export default function AddProduct({ user, userDetails, product, setProduct }) {
 	const [productName, setProductName] = useState('');
 	const [category, setCategory] = useState('');
@@ -60,7 +59,7 @@ export default function AddProduct({ user, userDetails, product, setProduct }) {
   };
 
   const handleAddProduct = async (e) => {
-		e.preventDefault(); // Prevents refreshing
+		e.preventDefault();
 
     try {
       const productId = uuidv4();
@@ -69,8 +68,8 @@ export default function AddProduct({ user, userDetails, product, setProduct }) {
         sellerUserName: userDetails.userName,
         sellerId: user.uid,
         sellerEmail: userDetails.email,
-        // productId: productId, 
-        // not needed since already assigned Product's docId using uuidv4
+
+        productID: productId,
         productName: productName,
         productPrice: Number(price),
         productCategory: category,
@@ -94,53 +93,6 @@ export default function AddProduct({ user, userDetails, product, setProduct }) {
       setError(err.message);
     }
   }
-	
-  /*
-	const handleAddProduct = async (e) => {
-		e.preventDefault(); // Prevents refreshing
-		const productId = uuidv4();
-		const imageRef = ref(storage, `product-images/${image.name}_${productId}`);
-		const uploadTask = uploadBytesResumable(imageRef, image);
-		uploadTask.on(
-			'state_changed',
-			(snapshot) => {
-				const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-				console.log(progress);
-			},
-			(err) => setError(err.message),
-			async () => {
-				try {
-					const imageUrl = await getDownloadURL(imageRef);
-					await setDoc(doc(db, 'Products', productId), {
-            sellerUserName: userDetails.userName,
-            sellerId: user.uid,
-            sellerEmail: userDetails.email,
-						productId: productId,
-						productName: productName,
-						roductPrice: Number(price),
-						productCategory: category,
-						productCondition: condition,
-						productDescription: description,
-						productLocation: location,
-						productImage: imageUrl,
-            createdAt: new Date(),
-					});
-					setProductName('');
-					setPrice(0);
-					setCategory('');
-					setCondition('');
-					setDescription('');
-					setLocation('');
-					setImage(null);
-					setError('');
-					document.getElementById('file').value = '';
-				} catch (err) {
-					setError(err.message);
-				}
-			}
-		);
-	};
-  */
 
 	return (
 		<>

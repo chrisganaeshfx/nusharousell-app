@@ -11,6 +11,8 @@ import Profile from './screens/profile/Profile';
 import EditProfile from './screens/profile/EditProfile';
 import Chat from './screens/chats/Chat';
 import Test from './screens/test/Test';
+import {ProductsContextProvider} from './screens/GLOBAL/components/ProductsContext';
+
 
 export default function App() {
 	const [product, setProduct] = useState([]);
@@ -59,6 +61,7 @@ export default function App() {
 	return (
 		<Router>
 			<div className='App'>
+			<ProductsContextProvider>
 				<Routes>
 					<Route
 						path='/'
@@ -89,8 +92,14 @@ export default function App() {
 						}
 					/>
 					<Route
-						path='/productdetail'
-						element={<ProductDetail />}
+						path='/productdetail/:productID'
+						element={<ProductDetail
+								user={user}
+								userDetails={userDetails}
+								product={product}
+								setProduct={setProduct} 
+							/>
+						}
 					/>
 					<Route
 						path='/chat'
@@ -123,6 +132,7 @@ export default function App() {
             element={<Test />}
           />
 				</Routes>
+				</ProductsContextProvider>
 			</div>
 		</Router>
 	);
