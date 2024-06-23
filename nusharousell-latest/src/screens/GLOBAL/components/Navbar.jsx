@@ -6,8 +6,12 @@ import { FaSearch, FaRegHeart } from 'react-icons/fa';
 import { MdChatBubbleOutline } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
+import { useUser, useSetUser } from '../contexts/UserContext';
 
 export default function Navbar({ userDetails, setUserDetails }) {
+
+  const user = useUser();
+  const setUser = useSetUser();
 
 	const [search, setSearch] = useState('');
 	const handleSearch = (e) => {
@@ -18,7 +22,7 @@ export default function Navbar({ userDetails, setUserDetails }) {
     try {
       await auth.signOut();
       console.log("User successfully logged out!");
-      setUserDetails(null);
+      setUser(null);
     } catch (error) {
       console.error("Error logging out:", error.message);
     }
@@ -36,10 +40,10 @@ export default function Navbar({ userDetails, setUserDetails }) {
 						/>
           </a>
         </div>
-        {userDetails ? (
+        {user ? (
           <div className='rightside-header'>
             <div className='dropdown'>
-              <a className='dropbtn'>Hello, {userDetails.userName} <CgProfile /></a>
+              <a className='dropbtn'>Hello, {user.userName} <CgProfile /></a>
               <div className='dropdown-content'>
                 <Link to="/profile">Profile</Link>
                 <Link to="/">Manage Listings</Link>

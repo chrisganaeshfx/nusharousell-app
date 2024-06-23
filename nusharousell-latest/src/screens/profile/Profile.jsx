@@ -2,16 +2,21 @@ import React, { useState, useContext, useEffect } from 'react';
 import '../styles/Profile.css';
 import { IoMdMail } from 'react-icons/io';
 import { FaPhoneAlt, FaStar, FaSchool } from 'react-icons/fa';
-import { ProductsContext } from '../GLOBAL/components/ProductsContext';
+import { ProductsContext } from '../GLOBAL/contexts/ProductsContext';
 import { Link } from 'react-router-dom';
+import { useUser, useSetUser } from '../GLOBAL/contexts/UserContext';
+import { useProducts } from '../GLOBAL/contexts/ProductsContext';
 
-export default function Profile({ user, userDetails }) {
-	console.log('Current user: ', user);
-	console.log('Current user details: ', userDetails);
+export default function Profile() {
+  const user = useUser();
+  const setUser = useSetUser();
+  const { products, fetchProducts } = useProducts();
 
-	const { products, fetchProducts } = useContext(ProductsContext);
 	const [userProducts, setUserProducts] = useState([]);
 
+  console.log('Current user: ', user);
+	console.log('Current user details: ', user);
+  
 	useEffect(() => {
 		fetchProducts();
 	}, [fetchProducts]);
@@ -23,7 +28,7 @@ export default function Profile({ user, userDetails }) {
 		}
 	});
 
-	if (!userDetails) {
+	if (!user) {
 		return <div>Loading...</div>;
 	}
 
@@ -31,25 +36,25 @@ export default function Profile({ user, userDetails }) {
 		<div className='profile-page'>
 			<div className='profile-column'>
 				<div className='avatar'>
-					{userDetails.image && (
+					{user.image && (
 						<img
-							src={userDetails.image}
-							alt={`${userDetails.userName}'s profile-pic`}
+							src={user.image}
+							alt={`${user.userName}'s profile-pic`}
 						/>
 					)}
 				</div>
-				<h3>@{userDetails.userName}</h3>
+				<h3>@{user.userName}</h3>
 				<p>
-					<IoMdMail />: {userDetails.email}
+					<IoMdMail />: {user.email}
 				</p>
 				<p>
-					<FaPhoneAlt />: +65 {Number(userDetails.phoneNumber)}
+					<FaPhoneAlt />: +65 {Number(user.phoneNumber)}
 				</p>
 				<p>
-					<FaStar />: {userDetails.rating}/5.0
+					<FaStar />: {user.rating}/5.0
 				</p>
 				<p>
-					<FaSchool />: {userDetails.meetupLocation}
+					<FaSchool />: {user.meetupLocation}
 				</p>
 				<button>
 					<a onClick={() => (window.location.href = '/profile/edit')}>Edit Profile</a>

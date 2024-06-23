@@ -4,9 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { setDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db, storage } from '../../config/firebase';
+import { useUser } from '../GLOBAL/contexts/UserContext';
 import '../styles/AddProduct.css';
 
-export default function AddProduct({ user, userDetails, product, setProduct }) {
+export default function AddProduct({ product, setProduct }) {
+  const user = useUser();
 	const [productName, setProductName] = useState('');
 	const [category, setCategory] = useState('');
 	const [condition, setCondition] = useState('');
@@ -64,9 +66,9 @@ export default function AddProduct({ user, userDetails, product, setProduct }) {
 			const productId = uuidv4();
 			const imageUrl = await productImageUploader(image, productId);
 			await setDoc(doc(db, 'Products', productId), {
-				sellerUserName: userDetails.userName,
-				sellerId: user.uid,
-				sellerEmail: userDetails.email,
+				sellerUserName: user.userName,
+				sellerId: user.userID,
+				sellerEmail: user.email,
 
 				productID: productId,
 				productName: productName,
@@ -79,7 +81,7 @@ export default function AddProduct({ user, userDetails, product, setProduct }) {
 				createdAt: new Date(),
 			});
 
-			const userDocRef = doc(db, 'Users', user.uid);
+			const userDocRef = doc(db, 'Users', user.userID);
 			await updateDoc(userDocRef, {
 				userProducts: arrayUnion(productId),
 			});

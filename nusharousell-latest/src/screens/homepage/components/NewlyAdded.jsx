@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { ProductsContext } from '../../GLOBAL/components/ProductsContext';
+import { ProductsContext } from '../../GLOBAL/contexts/ProductsContext';
 import { Link } from 'react-router-dom';
 import '../../styles/ProductList.css'; // Updated CSS file import
 
