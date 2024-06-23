@@ -1,12 +1,17 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { db } from '../../../config/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
 // create context
 export const ProductsContext = createContext();
 
+// create custom hook to use ProductsContext
+export const useProducts = () => {
+  return useContext(ProductsContext);
+}
+
 // context provider
-export const ProductsContextProvider = ({ children }) => {
+export const ProductsProvider = ({ children }) => {
   // defining useState variables
   const [products, setProducts] = useState([]);
   const [cachedProducts, setCachedProducts] = useState([]);

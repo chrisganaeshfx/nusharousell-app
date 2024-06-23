@@ -13,72 +13,27 @@ import Profile from './screens/profile/Profile';
 import EditProfile from './screens/profile/EditProfile';
 import Chat from './screens/chats/Chat';
 import Test from './screens/test/Test';
-import {ProductsContextProvider} from './screens/GLOBAL/components/ProductsContext';
+import { ProductsProvider } from './screens/GLOBAL/contexts/ProductsContext';
+import { UserProvider } from './screens/GLOBAL/contexts/UserContext';
 
 
 export default function App() {
 	const [product, setProduct] = useState([]);
-  /* TODO
-  const user = useContext(UserContext);
-  const setUser = useContext(SetUserContext);
-  const userDetails = useContext(UserDetailsContext);
-  const setUserDetails = useContext(SetUserDetailsContext);
-  */
-	const [user, setUser] = useState(null);
-	const [userDetails, setUserDetails] = useState(null);
-	const [error, setError] = useState(null);
 	/* *******SEARCHING PRODUCT********
   const searchproduct = (searchTerm) => {
     console.log("Searching for:", searchTerm);
   };
   */
 
-	const fetchUser = async () => {
-		auth.onAuthStateChanged(async (user) => {
-			if (user) {
-				try {
-					const userDoc = doc(db, 'Users', user.uid);
-					const docSnapshot = await getDoc(userDoc);
-					const userDetails = docSnapshot.data();
-					setUser(user);
-					setUserDetails(userDetails);
-					// to obtain userId: use
-					// const userId = user.uid;
-					// to obtain userDetails: use
-					// const getUserDetails = async () => {
-					// const userDoc = doc(db, "Users", user.uid)
-					// const docSnapshot = await getDoc(userDoc)
-					// const userDetails = docSnapshot.data();
-					console.log('Current user:', user);
-					console.log('Current user details:', userDetails);
-					setError(null);
-				} catch (err) {
-					setError(err.message);
-					// To place somewhere!!
-					// {error && <span className='error-msg'>{error}</span>}
-				}
-			}
-		});
-	};
-
-	// Use useEffect to call fetchData when the component mounts
-	useEffect(() => {
-		fetchUser();
-	}, []); // Empty dependency array ensures this runs only once when the component mounts
-
 	return (
 		<Router>
 			<div className='App'>
-			<ProductsContextProvider>
+      <UserProvider>
+			<ProductsProvider>
 				<Routes>
 					<Route
 						path='/'
-						element={
-							<Homepage
-								userDetails={userDetails}
-								setUserDetails={setUserDetails}
-							/>
-						}
+						element={<Homepage/>}
 					/>
 					<Route
 						path='/login'
@@ -92,8 +47,6 @@ export default function App() {
 						path='/addproduct'
 						element={
 							<AddProduct
-								user={user}
-								userDetails={userDetails}
 								product={product}
 								setProduct={setProduct}
 							/>
@@ -102,8 +55,6 @@ export default function App() {
 					<Route
 						path='/productdetail/:productID'
 						element={<ProductDetail
-								user={user}
-								userDetails={userDetails}
 								product={product}
 								setProduct={setProduct} 
 							/>
@@ -111,24 +62,18 @@ export default function App() {
 					/>
 					<Route
 						path='/chat'
-						element={<Chat user={user} />}
+						element={<Chat />}
 					/>
 					<Route
 						path='/profile'
 						element={
-							<Profile
-								user={user}
-								userDetails={userDetails}
-							/>
+							<Profile/>
 						}
 					/>
 					<Route
 						path='/profile/edit'
 						element={
-							<EditProfile
-								user={user}
-								userDetails={userDetails}
-							/>
+							<EditProfile/>
 						}
 					/>
 					<Route
@@ -140,7 +85,8 @@ export default function App() {
             element={<Test />}
           />
 				</Routes>
-				</ProductsContextProvider>
+				</ProductsProvider>
+        </UserProvider>
 			</div>
 		</Router>
 	);
