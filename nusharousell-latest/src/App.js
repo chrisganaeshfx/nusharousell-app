@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { auth, db } from './config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import UserProvider from './screens/GLOBAL/contexts/UserContext';
+// import ProductsProvider from './screens/GLOBAL/contexts/ProductsContext';
 import Homepage from './screens/homepage/Homepage';
 import Login from './screens/auth/Login';
 import Signup from './screens/auth/Signup';
@@ -16,6 +18,12 @@ import {ProductsContextProvider} from './screens/GLOBAL/components/ProductsConte
 
 export default function App() {
 	const [product, setProduct] = useState([]);
+  /* TODO
+  const user = useContext(UserContext);
+  const setUser = useContext(SetUserContext);
+  const userDetails = useContext(UserDetailsContext);
+  const setUserDetails = useContext(SetUserDetailsContext);
+  */
 	const [user, setUser] = useState(null);
 	const [userDetails, setUserDetails] = useState(null);
 	const [error, setError] = useState(null);
