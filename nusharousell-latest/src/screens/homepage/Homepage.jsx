@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../GLOBAL/components/Navbar";
 import EnvironmentFact from "./components/EnvironmentFact";
 import Category from "./components/Category";
-import NewlyAdded from "./components/Recos";
+import NewlyAdded from "./components/NewlyAdded";
 import Footer from "../GLOBAL/components/Footer";
 import "../styles/Homepage.css";
 
