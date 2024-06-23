@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Dropdown from '../sell/Dropdown';
+import Dropdown from '../sell/FormDropdown';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db, storage } from '../../config/firebase';
