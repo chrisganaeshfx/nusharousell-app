@@ -1,31 +1,31 @@
 .profile-page {
   display: flex;
   padding: 20px;
-  margin-top: 20px; /* Space at the top */
-  height: 100vh; /* Full viewport height */
-  box-sizing: border-box; /* Ensure padding is included in the height */
+  margin-top: 20px;
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 .profile-column {
-  width: 200px; /* Fixed width */
+  width: 200px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center items horizontally */
+  align-items: center;
   padding: 10px;
-  border-right: 1px solid #ccc; /* Vertical line */
+  border-right: 1px solid #ccc;
 }
 
 .avatar {
-  width: 150px; /* Adjust size as needed */
-  height: 150px; /* Adjust size as needed */
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  overflow: hidden; /* Ensure content inside is clipped to border radius */
+  overflow: hidden;
 }
 
 .avatar img {
-  width: 100%; /* Ensures the image fills the avatar container */
-  height: auto; /* Maintains aspect ratio */
-  object-fit: cover; /* Cover ensures the entire container is covered */
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .profile-column h3 {
@@ -53,27 +53,38 @@
 }
 
 .listing-column {
-  flex-grow: 1; /* Take up the remaining width */
+  flex-grow: 1;
   padding: 10px;
-  overflow-y: auto; /* Add vertical scroll if content overflows */
+  overflow-y: auto;
 }
 
 .listing-column h2 {
   margin-bottom: 20px;
 }
 
-.listing-column.l-image{
+.listing-column .l-image {
   display: flex;
   justify-content: center;
   gap: 20px;
 }
 
-.listing-column.l-image figure figcaption{
-  color: black;
+.listing-column .l-image .product-card {
+  position: relative;
 }
-.listing-column.l-image figure a{
-text-decoration: none;
+
+.listing-column .l-image .product-card .status-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #00008B; 
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  z-index: 10;
 }
-.listing-column.l-image figure a:hover{
-text-decoration: underline;
+
+.listing-column .l-image .product-card .reserved-banner {
+  background-color: #6a0dad;
 }
