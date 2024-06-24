@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { db } from '../../config/firebase';
-
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import '../styles/ProductDetail.css';
-import { useUser } from '../GLOBAL/contexts/UserContext'; // Import useUser from context
+import { useUser } from '../GLOBAL/contexts/UserContext';
 
 export default function ProductDetail() {
   const { productID } = useParams();
   const [product, setProduct] = useState(null);
-  const { user } = useUser(); // Use user from context
-  const [userIsSeller, setUserIsSeller] = useState(false); // State to track if user is the seller
+  const { user } = useUser();
+  const [userIsSeller, setUserIsSeller] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -20,7 +19,6 @@ export default function ProductDetail() {
         if (docSnapshot.exists) {
           const productData = docSnapshot.data();
           setProduct(productData);
-          // Check if the current user is the seller
           if (user && productData.sellerID === user.userID) {
             setUserIsSeller(true);
           } else {
@@ -35,7 +33,7 @@ export default function ProductDetail() {
     };
 
     fetchProduct();
-  }, [productID, user]); // Depend on user to handle updates
+  }, [productID, user]);
 
   const handleMarkAsReserved = async () => {
     try {
@@ -45,7 +43,6 @@ export default function ProductDetail() {
       });
       console.log('Product marked as Reserved successfully!');
       window.location.reload();
-      // Update local state if needed
     } catch (error) {
       console.error('Error marking product as Reserved:', error);
     }
@@ -59,7 +56,6 @@ export default function ProductDetail() {
       });
       console.log('Product marked as Sold successfully!');
       window.location.reload();
-      // Update local state if needed
     } catch (error) {
       console.error('Error marking product as Sold:', error);
     }
@@ -70,7 +66,6 @@ export default function ProductDetail() {
       const productRef = doc(db, 'Products', productID);
       await deleteDoc(productRef);
       console.log('Product deleted successfully!');
-      // Navigate back to profile page
       window.location.href = '/profile';
     } catch (error) {
       console.error('Error deleting product:', error);
@@ -110,13 +105,12 @@ export default function ProductDetail() {
             <p>{product.productStatus}</p>
           </div>
           <div className='action-container'>
-            {/* Conditional rendering based on userIsSeller */}
             {userIsSeller ? (
               <>
                 <Link to={`/chats/${productID}`} className='bold-link'>
                   View Chats
                 </Link>
-                <Link to={`/edit/${productID}`} className='action-link'>
+                <Link to={`/product/edit/${productID}`} className='action-link'>
                   Edit Listing
                 </Link>
                 <button className='action-button' onClick={handleMarkAsReserved}>
@@ -141,7 +135,6 @@ export default function ProductDetail() {
             )}
           </div>
         </div>
-        {/* Display SOLD or RESERVED banner based on productStatus */}
         {product.productStatus === 'Sold' && <div className='status-banner sold-banner'>SOLD</div>}
         {product.productStatus === 'Reserved' && <div className='status-banner reserved-banner'>RESERVED</div>}
       </div>

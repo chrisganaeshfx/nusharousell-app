@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import Dropdown from './FormDropdown';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { setDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db, storage } from '../../config/firebase';
 import { useUser } from '../GLOBAL/contexts/UserContext';
-import '../styles/AddProduct.css';
+import Dropdown from './FormDropdown';
+import '../styles/AddProduct.css'; // Import the CSS file
 
-export default function AddProduct() {
+export default function EditProduct() {
+  const { productID } = useParams();
   const { user } = useUser();
+
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
   const [condition, setCondition] = useState('');
@@ -19,6 +21,33 @@ export default function AddProduct() {
   const [price, setPrice] = useState(0);
   const [error, setError] = useState('');
   const types = ['image/png', 'image/jpeg'];
+
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const productRef = doc(db, 'Products', productID);
+        const docSnapshot = await getDoc(productRef);
+
+        if (docSnapshot.exists()) {
+          const productData = docSnapshot.data();
+          setProductName(productData.productName);
+          setCategory(productData.productCategory);
+          setCondition(productData.productCondition);
+          setDescription(productData.productDescription);
+          setLocation(productData.productLocation);
+          setPrice(productData.productPrice);
+          setImageUrl(productData.productImage); // Set image URL for preview
+        } else {
+          setError('Product not found');
+        }
+      } catch (error) {
+        console.error('Error fetching product details:', error);
+        setError(error.message);
+      }
+    };
+
+    fetchProductDetails();
+  }, [productID]);
 
   const imageHandler = (e) => {
     let file = e.target.files[0];
@@ -62,61 +91,51 @@ export default function AddProduct() {
     });
   };
 
-  const handleAddProduct = async (e) => {
+  const handleEditProduct = async (e) => {
     e.preventDefault();
 
     try {
-      const productID = uuidv4();
-      const imageUrl = await productImageUploader(image, productID);
-      await setDoc(doc(db, 'Products', productID), {
-        sellerUserName: user.userName,
-        sellerID: user.userID,
-        sellerEmail: user.email,
+      // Perform image upload if a new image is selected
+      let newImageUrl = imageUrl; // Default to current imageUrl
+      if (image) {
+        newImageUrl = await productImageUploader(image, productID);
+      }
 
-        productID: productID,
-        productName: productName,
+      const productRef = doc(db, 'Products', productID);
+      await updateDoc(productRef, {
+        productName,
         productPrice: Number(price),
         productCategory: category,
         productCondition: condition,
         productDescription: description,
         productLocation: location,
-        productImage: imageUrl,
-        createdAt: new Date(),
-        productStatus: 'Available',
+        productImage: newImageUrl,
       });
 
-      const userDocRef = doc(db, 'Users', user.userID);
-      await updateDoc(userDocRef, {
-        userProducts: arrayUnion(productID),
-      });
-
-      setProductName('');
-      setPrice(0);
-      setCategory('');
-      setCondition('');
-      setDescription('');
-      setLocation('');
-      setImage(null);
-      setImageUrl('');
       setError('');
-      document.getElementById('file').value = '';
-      window.location.href = '/';
+      window.location.href = `/product/view/${productID}`;
+      console.log('Product updated successfully!');
     } catch (err) {
+      console.error('Error editing product:', err);
       setError(err.message);
     }
   };
 
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
-      <h2>Add product for sale</h2>
-      <form className='inputs' onSubmit={handleAddProduct}>
+      <h2>Edit Product</h2>
+      <form className='inputs' onSubmit={handleEditProduct}>
         <div className='image-preview'>
           {imageUrl && (
             <img src={imageUrl} alt='Product' className='preview-image' />
           )}
         </div>
         <label htmlFor='image'>Image</label>
-        <input type='file' id='file' onChange={imageHandler} required />
+        <input type='file' id='file' onChange={imageHandler} />
         {error && <span className='error-msg'>{error}</span>}
         <br />
         <label htmlFor='productName'>Item Name</label>

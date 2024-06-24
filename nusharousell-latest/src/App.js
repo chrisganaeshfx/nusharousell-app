@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import UserProvider from './screens/GLOBAL/contexts/UserContext';
 // import ProductsProvider from './screens/GLOBAL/contexts/ProductsContext';
@@ -9,13 +9,13 @@ import AddProduct from './screens/sell/AddProduct';
 import ProductDetail from './screens/productpage/ProductDetail';
 import Profile from './screens/profile/Profile';
 import EditProfile from './screens/profile/EditProfile';
+import EditProduct from './screens/sell/EditProduct';
 import Chat from './screens/chats/Chat';
 import { ProductsProvider } from './screens/GLOBAL/contexts/ProductsContext';
 import { UserProvider } from './screens/GLOBAL/contexts/UserContext';
 
 
 export default function App() {
-	const [product, setProduct] = useState([]);
 	/* *******SEARCHING PRODUCT********
   const searchproduct = (searchTerm) => {
     console.log("Searching for:", searchTerm);
@@ -41,34 +41,28 @@ export default function App() {
 						element={<Signup />}
 					/>
 					<Route
-						path='/addproduct'
-						element={
-							<AddProduct/>
-						}
+						path='/product/add'
+						element={<AddProduct/>}
 					/>
 					<Route
-						path='/productdetail/:productID'
-						element={<ProductDetail
-								product={product}
-								setProduct={setProduct} 
-							/>
-						}
+						path='/product/view/:productID'
+						element={<ProductDetail/>}
+					/>
+					<Route
+						path='/product/edit/:productID'
+						element={<EditProduct/>}
 					/>
 					<Route
 						path='/chat'
 						element={<Chat />}
 					/>
 					<Route
-						path='/profile'
-						element={
-							<Profile/>
-						}
+						path='/userprofile/view/:userID'
+						element={<Profile/>}
 					/>
 					<Route
-						path='/profile/edit'
-						element={
-							<EditProfile/>
-						}
+						path='/userprofile/edit/:userID'
+						element={<EditProfile/>}
 					/>
 					<Route
 						path='*'

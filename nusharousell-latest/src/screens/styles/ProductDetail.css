@@ -1,12 +1,12 @@
 .product-info {
   display: flex;
   align-items: flex-start;
-  justify-content: center; /* Center content horizontally */
+  justify-content: center;
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
   background: #fff;
-  position: relative; /* Ensure relative positioning for absolute elements */
+  position: relative;
 }
 
 .product-info img {
@@ -16,6 +16,10 @@
   height: auto;
   border-radius: 8px;
   margin-right: 30px;
+}
+
+.product-details {
+  flex: 1;
 }
 
 .product-details h4 {
@@ -86,19 +90,22 @@
 
 /* Styling for status banners */
 .status-banner {
-  position: absolute;
-  bottom: 520px;
+  position: relative;
+  bottom: 10px;
+  left: 10px;
   padding: 10px 20px;
   font-size: 20px;
   font-weight: bold;
   color: white;
+  background-color: rgba(0, 0, 0, 0.7); /* Adjust background color and opacity */
   border-radius: 4px;
+  z-index: 1;
 }
 
 .sold-banner {
-  background-color: #00008B;
+  background-color: #00008b;
 }
 
 .reserved-banner {
-  background-color: #800080; 
+  background-color: #800080;
 }

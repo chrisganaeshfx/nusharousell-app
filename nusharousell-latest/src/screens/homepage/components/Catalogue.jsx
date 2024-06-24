@@ -37,7 +37,7 @@ export default function NewlyAdded() {
                     nonUserAvailableProducts.map((product) => (
                         <div key={product.productID} className='product-card'>
                             <figure>
-                                <Link to={`/productdetail/${product.productID}`}>
+                                <Link to={`/product/view/${product.productID}`}>
                                     <img
                                         src={product.productImage}
                                         alt={product.productName} // Use a descriptive alt text
