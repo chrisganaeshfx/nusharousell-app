@@ -8,11 +8,9 @@ import { CgProfile } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
 import { useUser, useSetUser } from '../contexts/UserContext';
 
-export default function Navbar({ userDetails, setUserDetails }) {
+export default function Navbar() {
 
-  const user = useUser();
-  const setUser = useSetUser();
-
+  const { user, setUser } = useUser();
 	const [search, setSearch] = useState('');
 	const handleSearch = (e) => {
 		e.preventDefault();

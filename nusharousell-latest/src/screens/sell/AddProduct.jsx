@@ -7,8 +7,8 @@ import { db, storage } from '../../config/firebase';
 import { useUser } from '../GLOBAL/contexts/UserContext';
 import '../styles/AddProduct.css';
 
-export default function AddProduct({ product, setProduct }) {
-  const user = useUser();
+export default function AddProduct() {
+  const { user } = useUser();
 	const [productName, setProductName] = useState('');
 	const [category, setCategory] = useState('');
 	const [condition, setCondition] = useState('');
@@ -30,9 +30,9 @@ export default function AddProduct({ product, setProduct }) {
 		}
 	};
 
-	const productImageUploader = (newImageFile, productId) => {
+	const productImageUploader = (newImageFile, productID) => {
 		return new Promise((resolve, reject) => {
-			const newImageRef = ref(storage, `product-images/${productId}_${newImageFile.name}`);
+			const newImageRef = ref(storage, `product-images/${productID}_${newImageFile.name}`);
 			const uploadTask = uploadBytesResumable(newImageRef, newImageFile);
 
 			uploadTask.on(
@@ -63,14 +63,14 @@ export default function AddProduct({ product, setProduct }) {
 		e.preventDefault();
 
 		try {
-			const productId = uuidv4();
-			const imageUrl = await productImageUploader(image, productId);
-			await setDoc(doc(db, 'Products', productId), {
+			const productID = uuidv4();
+			const imageUrl = await productImageUploader(image, productID);
+			await setDoc(doc(db, 'Products', productID), {
 				sellerUserName: user.userName,
-				sellerId: user.userID,
+				sellerID: user.userID,
 				sellerEmail: user.email,
 
-				productID: productId,
+				productID: productID,
 				productName: productName,
 				productPrice: Number(price),
 				productCategory: category,
@@ -79,11 +79,12 @@ export default function AddProduct({ product, setProduct }) {
 				productLocation: location,
 				productImage: imageUrl,
 				createdAt: new Date(),
+        productStatus: 'Available',
 			});
 
 			const userDocRef = doc(db, 'Users', user.userID);
 			await updateDoc(userDocRef, {
-				userProducts: arrayUnion(productId),
+				userProducts: arrayUnion(productID),
 			});
 
 			setProductName('');

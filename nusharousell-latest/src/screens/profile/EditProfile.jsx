@@ -6,8 +6,7 @@ import { db, storage } from '../../config/firebase';
 import { useUser } from '../GLOBAL/contexts/UserContext';
 
 export default function EditProfile() {
-  const user = useUser();
-
+  const { user, setUser } = useUser();
 	const [imageUrl, setImageUrl] = useState(user?.image || '');
 	const [newImageFile, setNewImageFile] = useState(null);
 	const [userName, setUserName] = useState(user?.userName || '');
@@ -41,12 +40,12 @@ export default function EditProfile() {
     }
   };
 
-	const userImageUploader = (newImageFile, userId) => {
+	const userImageUploader = (newImageFile, userID) => {
 		if (!newImageFile) {
 			return null;
 		} else {
 			return new Promise((resolve, reject) => {
-				const newImageRef = ref(storage, `user-images/${userId}_${newImageFile.name}`);
+				const newImageRef = ref(storage, `user-images/${userID}_${newImageFile.name}`);
 				const uploadTask = uploadBytesResumable(newImageRef, newImageFile);
 
 				uploadTask.on(

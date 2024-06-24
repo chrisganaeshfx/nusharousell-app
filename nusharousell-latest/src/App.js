@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { auth, db } from './config/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import UserProvider from './screens/GLOBAL/contexts/UserContext';
 // import ProductsProvider from './screens/GLOBAL/contexts/ProductsContext';
@@ -12,7 +10,6 @@ import ProductDetail from './screens/productpage/ProductDetail';
 import Profile from './screens/profile/Profile';
 import EditProfile from './screens/profile/EditProfile';
 import Chat from './screens/chats/Chat';
-import Test from './screens/test/Test';
 import { ProductsProvider } from './screens/GLOBAL/contexts/ProductsContext';
 import { UserProvider } from './screens/GLOBAL/contexts/UserContext';
 
@@ -46,10 +43,7 @@ export default function App() {
 					<Route
 						path='/addproduct'
 						element={
-							<AddProduct
-								product={product}
-								setProduct={setProduct}
-							/>
+							<AddProduct/>
 						}
 					/>
 					<Route
@@ -80,10 +74,6 @@ export default function App() {
 						path='*'
 						element={<h1>Error 404: Your Mother Not Found</h1>}
 					/>
-          <Route 
-            path='/test'
-            element={<Test />}
-          />
 				</Routes>
 				</ProductsProvider>
         </UserProvider>
