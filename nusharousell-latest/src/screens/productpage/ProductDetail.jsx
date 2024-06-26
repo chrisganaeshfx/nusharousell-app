@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { db } from '../../config/firebase';
-
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import '../styles/ProductDetail.css';
-import { useUser } from '../GLOBAL/contexts/UserContext'; // Import useUser from context
+import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
 
 export default function ProductDetail() {
   const { productID } = useParams();
   const [product, setProduct] = useState(null);
-  const { user } = useUser(); // Use user from context
-  const [userIsSeller, setUserIsSeller] = useState(false); // State to track if user is the seller
+  const { user } = useAuthUser();
+  const [userIsSeller, setUserIsSeller] = useState(false);
+
+  console.log('productID: ', productID);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -20,7 +21,7 @@ export default function ProductDetail() {
         if (docSnapshot.exists) {
           const productData = docSnapshot.data();
           setProduct(productData);
-          // Check if the current user is the seller
+          console.log('Product fetched successfully:', productData);
           if (user && productData.sellerID === user.userID) {
             setUserIsSeller(true);
           } else {
@@ -35,7 +36,7 @@ export default function ProductDetail() {
     };
 
     fetchProduct();
-  }, [productID, user]); // Depend on user to handle updates
+  }, [productID, user]);
 
   const handleMarkAsReserved = async () => {
     try {
@@ -45,9 +46,21 @@ export default function ProductDetail() {
       });
       console.log('Product marked as Reserved successfully!');
       window.location.reload();
-      // Update local state if needed
     } catch (error) {
       console.error('Error marking product as Reserved:', error);
+    }
+  };
+
+  const handleMarkAsAvailable = async () => {
+    try {
+      const productRef = doc(db, 'Products', productID);
+      await updateDoc(productRef, {
+        productStatus: 'Available',
+      });
+      console.log('Product marked as Available successfully!');
+      window.location.reload();
+    } catch (error) {
+      console.error('Error marking product as Available:', error);
     }
   };
 
@@ -59,7 +72,6 @@ export default function ProductDetail() {
       });
       console.log('Product marked as Sold successfully!');
       window.location.reload();
-      // Update local state if needed
     } catch (error) {
       console.error('Error marking product as Sold:', error);
     }
@@ -70,8 +82,7 @@ export default function ProductDetail() {
       const productRef = doc(db, 'Products', productID);
       await deleteDoc(productRef);
       console.log('Product deleted successfully!');
-      // Navigate back to profile page
-      window.location.href = '/profile';
+      window.location.href = `/userprofile/view/${user.userID}`;
     } catch (error) {
       console.error('Error deleting product:', error);
     }
@@ -85,7 +96,7 @@ export default function ProductDetail() {
     <>
       <br />
       <div className='product-info'>
-        <img src={product.productImage} alt={`${product.productName}`} />
+        <img src={product.productImageUrl} alt={`${product.productName}`} />
         <div className='product-details'>
           <h4>Item</h4>
           <p>{product.productName}</p>
@@ -110,22 +121,27 @@ export default function ProductDetail() {
             <p>{product.productStatus}</p>
           </div>
           <div className='action-container'>
-            {/* Conditional rendering based on userIsSeller */}
             {userIsSeller ? (
               <>
                 <Link to={`/chats/${productID}`} className='bold-link'>
                   View Chats
                 </Link>
-                <Link to={`/edit/${productID}`} className='action-link'>
+                <Link to={`/product/edit/${productID}`} className='action-link'>
                   Edit Listing
                 </Link>
-                <button className='action-button' onClick={handleMarkAsReserved}>
-                  Mark as Reserved
-                </button>
-                <button className='action-button' onClick={handleMarkAsSold}>
+                {product.productStatus === 'Reserved' ? (
+                  <button className='action-button green-button' onClick={handleMarkAsAvailable}>
+                    Mark as Available
+                  </button>
+                ) : (
+                  <button className='action-button light-red-button' onClick={handleMarkAsReserved}>
+                    Mark as Reserved
+                  </button>
+                )}
+                <button className='action-button dark-red-button' onClick={handleMarkAsSold}>
                   Mark as Sold
                 </button>
-                <button className='action-button' onClick={handleDeleteListing}>
+                <button className='action-button dark-red-button' onClick={handleDeleteListing}>
                   Delete Listing
                 </button>
               </>
@@ -141,7 +157,6 @@ export default function ProductDetail() {
             )}
           </div>
         </div>
-        {/* Display SOLD or RESERVED banner based on productStatus */}
         {product.productStatus === 'Sold' && <div className='status-banner sold-banner'>SOLD</div>}
         {product.productStatus === 'Reserved' && <div className='status-banner reserved-banner'>RESERVED</div>}
       </div>

@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
-import { auth } from "../../config/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../config/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import '../styles/Login.css';
-// import SignInwithGoogle from "./signInWIthGoogle";
 
 export default function Login() {
-
-  const [email, setEmail] = useState('');
+	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+	const [error, setError] = useState('');
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password); 
-      setEmail('');
-      setPassword('');
-      setError('');
-      window.location.href = '/';
-    } catch (err) {
-      setError(err.message);
-    }
-  }
+	const handleLogin = async (e) => {
+		e.preventDefault();
+		try {
+			await signInWithEmailAndPassword(auth, email, password);
+			setEmail('');
+			setPassword('');
+			setError('');
+			window.location.href = '/';
+		} catch (err) {
+			setError(err.message);
+		}
+	};
 
 	return (
 		<div className='container'>
@@ -36,20 +34,20 @@ export default function Login() {
 				<input
 					type='email'
 					className='form-control'
-          placeholder='Enter email'
-					required
+					placeholder='Enter email'
 					onChange={(e) => setEmail(e.target.value)}
 					value={email}
+          required
 				/>
 				<br />
 				<label htmlFor='password'>Password</label>
 				<input
 					type='password'
 					className='form-control'
-          placeholder='Enter password'
-					required
+					placeholder='Enter password'
 					onChange={(e) => setPassword(e.target.value)}
 					value={password}
+					required
 				/>
 				<br />
 				<button
@@ -66,4 +64,4 @@ export default function Login() {
 			</span>
 		</div>
 	);
-};
+}

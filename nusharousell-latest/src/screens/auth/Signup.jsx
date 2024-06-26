@@ -4,8 +4,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import '../styles/Signup.css';
 
-export default function Signup({props}) {
-	// defining state
+export default function Signup() {
 	const [userName, setUserName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -18,12 +17,13 @@ export default function Signup({props}) {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       const userDoc = doc(db, 'Users', cred.user.uid);
       await setDoc(userDoc, {
+        userID: cred.user.uid,
         userName: userName,
         email: email,
         password: password,
         firstName: '',
         lastName: '',
-        phoneNumber: '',
+        phoneNumber: '**** ****',
         imageUrl: '',
         ratings: 0,
         meetupLocation: '',
@@ -50,7 +50,6 @@ export default function Signup({props}) {
 					autoComplete='off'
 					className='form-group'
 					onSubmit={handleSignup}>
-					<div className='mb-3'>
 						<label
 							htmlFor='name'
 							className='form-label'>
@@ -61,12 +60,11 @@ export default function Signup({props}) {
 							id='username'
 							className='form-control'
               placeholder='Enter username'
-							required
 							onChange={(e) => setUserName(e.target.value)}
 							value={userName}
+							required
 						/>
-					</div>
-					<div className='mb-3'>
+            <br/>
 						<label
 							htmlFor='email'
 							className='form-label'>
@@ -77,12 +75,11 @@ export default function Signup({props}) {
 							id='email'
 							className='form-control'
               placeholder='Enter email'
-							required
 							onChange={(e) => setEmail(e.target.value)}
 							value={email}
+							required
 						/>
-					</div>
-					<div className='mb-3'>
+            <br/>
 						<label
 							htmlFor='password'
 							className='form-label'>
@@ -97,7 +94,7 @@ export default function Signup({props}) {
 							onChange={(e) => setPassword(e.target.value)}
 							value={password}
 						/>
-					</div>
+            <br/>
 					<button
 						type='submit'
 						className='btn btn-success btn-md mybtn'>

@@ -79,3 +79,20 @@ h2 {
   .select-dropdown:hover .dropdown-content {
     display: block;
   }
+
+  .image-preview {
+    width: 100%;
+    max-width: 300px; /* Adjust maximum width as needed */
+    height: auto;
+    margin-bottom: 20px; /* Optional: Add margin for spacing */
+    border: 1px solid #ddd; /* Optional: Add border for styling */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    overflow: hidden; /* Hide any overflowing content */
+  }
+  
+  .image-preview img {
+    width: 100%; /* Ensure image takes full width of its container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Ensure image is block-level element */
+    object-fit: cover; /* Maintain aspect ratio and cover container */
+  }

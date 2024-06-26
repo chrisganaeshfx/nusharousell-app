@@ -3,30 +3,29 @@ import { auth, db } from '../../../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 // create context
-const UserContext = createContext();
+const AuthUserContext = createContext();
 
 // Custom hook to use UserProvider
-export const useUser = () => {
-	return useContext(UserContext);
+export const useAuthUser = () => {
+	return useContext(AuthUserContext);
 };
 
 // UserProvider component
-export const UserProvider = ({ children }) => {
+export const AuthUserProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 
 	// Fetch user details from Firebase
 	const fetchUser = async () => {
-		auth.onAuthStateChanged(async (user) => {
-			if (user) {
+		auth.onAuthStateChanged(async (currUser) => {
+			if (currUser) {
 				try {
-					const userDoc = doc(db, 'Users', user.uid);
+					const userDoc = doc(db, 'Users', currUser.uid);
 					const docSnapshot = await getDoc(userDoc);
 					const userData = docSnapshot.data();
 					setUser({
-						userID: user.uid, // Add user's uid to userDetails
 						...userData,
 					});
-					console.log('User successfully added to state:', user);
+					console.log('User successfully fetched:', currUser);
 				} catch (err) {
 					console.error('Error fetching user:', err.message);
 				}
@@ -43,7 +42,7 @@ export const UserProvider = ({ children }) => {
 	}, []);
 
 	// Value object for context provider
-	const value = { user , setUser };
+	const value = { user, setUser };
 
-	return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+	return <AuthUserContext.Provider value={value}>{children}</AuthUserContext.Provider>;
 };
