@@ -21,6 +21,7 @@ export default function ProductDetail() {
         if (docSnapshot.exists) {
           const productData = docSnapshot.data();
           setProduct(productData);
+          console.log('Product fetched successfully:', productData);
           if (user && productData.sellerID === user.userID) {
             setUserIsSeller(true);
           } else {
@@ -95,7 +96,7 @@ export default function ProductDetail() {
     <>
       <br />
       <div className='product-info'>
-        <img src={product.productImage} alt={`${product.productName}`} />
+        <img src={product.productImageUrl} alt={`${product.productName}`} />
         <div className='product-details'>
           <h4>Item</h4>
           <p>{product.productName}</p>
