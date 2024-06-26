@@ -54,14 +54,14 @@ export default function Catalogue() {
 							<Link to={`/product/view/${product.productID}`}>
 								<div className='product-image-container'>
 									<img
-										src={product.productImage}
+										src={product.productImageUrl}
 										alt={product.productName}
 										className='product-image'
 									/>
 								</div>
 								<figcaption className='product-info'>
 									{product.productName}<br/>
-									{product.productPrice}<br/>
+									S$ {product.productPrice}<br/>
 									{product.productCondition}<br/>
 								</figcaption>
 							</Link>

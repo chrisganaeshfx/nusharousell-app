@@ -9,6 +9,7 @@ import '../styles/AddProduct.css';
 
 export default function AddProduct() {
 	const { user } = useAuthUser();
+  console.log('User: ', user);
 	const [productName, setProductName] = useState('');
 	const [category, setCategory] = useState('');
 	const [condition, setCondition] = useState('');
@@ -37,43 +38,40 @@ export default function AddProduct() {
 	};
 
 	const productImageUploader = (imageFile, productID) => {
-		return new Promise((resolve, reject) => {
-			const newImageRef = ref(storage, `product-images/${productID}_${imageFile.name}`);
-
-			const uploadTask = uploadBytesResumable(newImageRef, imageFile);
-			uploadTask.on(
-				'state_changed',
-				(snapshot) => {
-					const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-					console.log(progress);
-					console.log('Successfully uploaded Product image onto Firebase Storage');
-				},
-				(err) => {
-					console.error(err.message);
-					reject(err.message);
-				},
-				async () => {
-					try {
-						const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
-						setImageUrl(imageUrl);
-						console.log(
-							'Successfully retrieved image URL from Firebase Storage and set it to imageUrl state'
-						);
-						resolve(imageUrl);
-					} catch (err) {
-						setError(err.message);
-						reject(err.message);
-					}
-				}
-			);
-		});
-	};
-
+    return new Promise((resolve, reject) => {
+      const newImageRef = ref(storage, `product-images/${productID}_${imageFile.name}`);
+  
+      const uploadTask = uploadBytesResumable(newImageRef, imageFile);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(progress);
+        },
+        (err) => {
+          console.error(err.message);
+          reject(err.message);
+        },
+        async () => {
+          try {
+            const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
+            setImageUrl(imageUrl);
+            console.log('Successfully retrieved image URL from Firebase Storage and set it to imageUrl state');
+            resolve(imageUrl);
+          } catch (err) {
+            setError(err.message);
+            reject(err.message);
+          }
+        }
+      );
+    });
+  };
+  
 	const handleAddProduct = async (e) => {
 		e.preventDefault();
 		try {
 			const productID = uuidv4();
-			productImageUploader(imageFile, productID);
+			const imageUrl = await productImageUploader(imageFile, productID); // Await the image upload task here
 
 			const newProductData = {
 				sellerUserName: user.userName,
@@ -93,8 +91,9 @@ export default function AddProduct() {
 				productStatus: 'Available',
 			};
 
+      // Debugging: log the newProductData to ensure all fields are populated
+			console.log('New Product Data:', newProductData);
 			await setDoc(doc(db, 'Products', productID), newProductData);
-			console.log("Successfully added product to 'Products' collection: ", newProductData);
 			const userDocRef = doc(db, 'Users', user.userID);
 			await updateDoc(userDocRef, {
 				userProducts: arrayUnion(productID),
@@ -112,7 +111,7 @@ export default function AddProduct() {
 			setImageUrl('');
 			setError('');
 			document.getElementById('file').value = '';
-			window.location.href = `/userprofile/view/${user.userID}`;
+			// window.location.href = `/userprofile/view/${user.userID}`;
 		} catch (err) {
 			setError(err.message);
 		}

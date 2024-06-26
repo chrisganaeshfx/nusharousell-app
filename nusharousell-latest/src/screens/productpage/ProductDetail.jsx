@@ -79,7 +79,7 @@ export default function ProductDetail() {
       const productRef = doc(db, 'Products', productID);
       await deleteDoc(productRef);
       console.log('Product deleted successfully!');
-      window.location.href = '/profile';
+      window.location.href = `/userprofile/view/${user.userID}`;
     } catch (error) {
       console.error('Error deleting product:', error);
     }

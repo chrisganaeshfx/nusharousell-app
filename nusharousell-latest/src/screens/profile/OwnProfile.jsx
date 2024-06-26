@@ -86,7 +86,7 @@ export default function OwnProfile() {
                                         <Link to={`/product/view/${product.productID}`}>
                                             <div className='product-image-container'>
                                                 <img
-                                                    src={product.productImage}
+                                                    src={product.productImageUrl}
                                                     alt={product.productName}
                                                     className='product-image'
                                                 />

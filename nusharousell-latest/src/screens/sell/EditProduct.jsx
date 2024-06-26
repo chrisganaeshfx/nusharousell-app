@@ -109,7 +109,7 @@ export default function EditProduct() {
         productCondition: condition,
         productDescription: description,
         productLocation: location,
-        productImage: newImageUrl,
+        productImageUrl: newImageUrl,
       });
 
       setError('');
