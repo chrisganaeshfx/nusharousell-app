@@ -11,6 +11,8 @@ export default function ProductDetail() {
   const { user } = useAuthUser();
   const [userIsSeller, setUserIsSeller] = useState(false);
 
+  console.log('productID: ', productID);
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {

@@ -12,7 +12,7 @@ import AddProduct from './screens/sell/AddProduct';
 import ProductDetail from './screens/productpage/ProductDetail';
 import EditProduct from './screens/sell/EditProduct';
 // user profile pages
-import Profile from './screens/profile/OwnProfile';
+import Profile from './screens/profile/Profile';
 import EditProfile from './screens/profile/EditProfile';
 // chat
 import Chat from './screens/chats/Chat';
@@ -57,6 +57,10 @@ export default function App() {
 								/>
 								<Route
 									path='/userprofile/view/:userID'
+									element={<Profile />}
+								/>
+								<Route
+									path='/userprofile/view/:sellerID'
 									element={<Profile />}
 								/>
 								<Route

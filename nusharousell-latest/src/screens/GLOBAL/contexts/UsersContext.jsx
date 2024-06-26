@@ -32,7 +32,6 @@ export const UsersProvider = ({ children }) => {
       const usersRef = collection(db, 'Users');
       const querySnapshot = await getDocs(usersRef);
       const usersData = querySnapshot.docs.map(doc => ({
-        userID: doc.id,
         ...doc.data()
       }));
       
