@@ -48,6 +48,19 @@ export default function ProductDetail() {
     }
   };
 
+  const handleMarkAsAvailable = async () => {
+    try {
+      const productRef = doc(db, 'Products', productID);
+      await updateDoc(productRef, {
+        productStatus: 'Available',
+      });
+      console.log('Product marked as Available successfully!');
+      window.location.reload();
+    } catch (error) {
+      console.error('Error marking product as Available:', error);
+    }
+  };
+
   const handleMarkAsSold = async () => {
     try {
       const productRef = doc(db, 'Products', productID);
@@ -113,13 +126,19 @@ export default function ProductDetail() {
                 <Link to={`/product/edit/${productID}`} className='action-link'>
                   Edit Listing
                 </Link>
-                <button className='action-button' onClick={handleMarkAsReserved}>
-                  Mark as Reserved
-                </button>
-                <button className='action-button' onClick={handleMarkAsSold}>
+                {product.productStatus === 'Reserved' ? (
+                  <button className='action-button green-button' onClick={handleMarkAsAvailable}>
+                    Mark as Available
+                  </button>
+                ) : (
+                  <button className='action-button light-red-button' onClick={handleMarkAsReserved}>
+                    Mark as Reserved
+                  </button>
+                )}
+                <button className='action-button dark-red-button' onClick={handleMarkAsSold}>
                   Mark as Sold
                 </button>
-                <button className='action-button' onClick={handleDeleteListing}>
+                <button className='action-button dark-red-button' onClick={handleDeleteListing}>
                   Delete Listing
                 </button>
               </>

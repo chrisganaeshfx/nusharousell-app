@@ -94,15 +94,28 @@
 
 .status-banner {
   position: absolute;
-  bottom: 135px; /* Adjust distance from bottom */
+  bottom: 100px; /* Adjust distance from bottom */
   left: 50%; /* Center align horizontally */
   transform: translateX(-50%);
-  padding: 10px 80px;
+  padding: 5px 20px;
   font-size: 15px;
   font-weight: bold;
   color: #fff;
   z-index: 1;
   white-space: nowrap; /* Prevent text from wrapping */
+}
+
+
+.available-banner {
+  background-color: darkgreen;
+}
+
+.reserved-banner {
+  background-color: darkpurple;
+}
+
+.sold-banner {
+  background-color: darkblue;
 }
 
 @media screen and (max-width: 768px) {

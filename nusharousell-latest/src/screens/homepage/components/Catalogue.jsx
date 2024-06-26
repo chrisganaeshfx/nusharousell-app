@@ -41,16 +41,28 @@ export default function Catalogue() {
 						key={product.productID}
 						className='product-card'>
 						<figure>
+              <Link to={`/userprofile/view/${product.sellerID}`}>
+                <div className='user-info'>
+                  <img
+                    src={product.sellerImageUrl}
+                    alt={product.sellerUserName}
+                    className='user-image'
+                  />
+                  <span>@{product.sellerUserName}</span>
+                </div>
+              </Link>
 							<Link to={`/product/view/${product.productID}`}>
-								<img
-									src={product.productImage}
-									alt={product.productName} // Use a descriptive alt text
-								/>
-								<figcaption>
-									{product.productName} <br />
-									{product.productPrice} <br />
-									{product.productCondition} <br />
-									{product.sellerUserName}
+								<div className='product-image-container'>
+									<img
+										src={product.productImage}
+										alt={product.productName}
+										className='product-image'
+									/>
+								</div>
+								<figcaption className='product-info'>
+									{product.productName}<br/>
+									{product.productPrice}<br/>
+									{product.productCondition}<br/>
 								</figcaption>
 							</Link>
 						</figure>

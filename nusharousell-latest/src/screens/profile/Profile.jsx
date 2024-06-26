@@ -12,7 +12,7 @@ export default function Profile() {
     const { user } = useUser();
     const { products, fetchProducts } = useProducts();
     const [userProducts, setUserProducts] = useState([]);
-    
+
     useEffect(() => {
         fetchProducts();
     }, [fetchProducts]);
@@ -32,9 +32,9 @@ export default function Profile() {
         <div className='profile-page'>
             <div className='profile-column'>
                 <div className='avatar'>
-                    {user.image && (
+                    {user.imageUrl && (
                         <img
-                            src={user.image}
+                            src={user.imageUrl}
                             alt={`${user.userName}'s profile-pic`}
                         />
                     )}
@@ -47,38 +47,62 @@ export default function Profile() {
                     <FaPhoneAlt />: +65 {Number(user.phoneNumber)}
                 </p>
                 <p>
-                    <FaStar />: {user.rating}/5.0
+                    {user.rating !== 0 ? (
+                        <>
+                            <FaStar />: {user.rating}/5.0
+                        </>
+                    ) : (
+                        'No ratings yet'
+                    )}
                 </p>
                 <p>
                     <FaSchool />: {user.meetupLocation}
                 </p>
-                <Link to={'/userprofile/edit/`${user.userID}`'}>
+                <button onClick={() => window.location.href = `/userprofile/edit/${user.userID}`}>
                     Edit Profile
-                </Link>
+                </button>
             </div>
             <div className='listing-column'>
                 <h2>My Listings</h2>
-                <div className='product-list-container'> {/* Use product-list-container from ProductList.css */}
+                <div className='product-list-container'>
                     <div className='product-list'>
                         {userProducts.length > 0 ? (
-                            userProducts.map((userproduct) => (
-                                <div key={userproduct.productID} className="product-card">
+                            userProducts.map((product) => (
+                                <div
+                                    key={product.productID}
+                                    className='product-card'>
                                     <figure>
-                                        <Link to={`/product/view/${userproduct.productID}`}>
-                                            <img
-                                                src={userproduct.productImage}
-                                                alt={`${userproduct.productName}`}
-                                            />
-                                            {userproduct.productStatus && (
-                                                <div className={`status-banner ${userproduct.productStatus.toLowerCase()}-banner`}>
-                                                    {userproduct.productStatus.toUpperCase()}
+                                        <Link to={`/userprofile/view/${product.sellerID}`}>
+                                            <div className='user-info'>
+                                                <img
+                                                    src={product.sellerImageUrl}
+                                                    alt={product.sellerUserName}
+                                                    className='user-image'
+                                                />
+                                                <span>@{product.sellerUserName}</span>
+                                            </div>
+                                        </Link>
+                                        <Link to={`/product/view/${product.productID}`}>
+                                            <div className='product-image-container'>
+                                                <img
+                                                    src={product.productImage}
+                                                    alt={product.productName}
+                                                    className='product-image'
+                                                />
+                                            </div>
+                                            {product.productStatus && (
+                                                <div
+                                                    className={`status-banner ${product.productStatus.toLowerCase()}-banner`}>
+                                                    {product.productStatus.toUpperCase()}
                                                 </div>
                                             )}
-                                            <figcaption>
-                                                <p>{userproduct.productName}</p>
-                                                <p>{userproduct.productPrice}</p>
-                                                <p>{userproduct.productCondition}</p>
-                                                <p>{userproduct.sellerUserName}</p>
+                                            <figcaption className='product-info'>
+                                                {product.productName}
+                                                <br />
+                                                {product.productPrice}
+                                                <br />
+                                                {product.productCondition}
+                                                <br />
                                             </figcaption>
                                         </Link>
                                     </figure>

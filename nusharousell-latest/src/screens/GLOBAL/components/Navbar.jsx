@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { auth } from '../../../config/firebase';
-import '../../styles/Navbar.css';
+import { useUser } from '../contexts/UserContext';
+
 import logo from '../assets/logos/horizontal-logo.png';
 import { FaSearch, FaRegHeart } from 'react-icons/fa';
 import { MdChatBubbleOutline } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
-import { useUser } from '../contexts/UserContext';
+import '../../styles/Navbar.css';
 
 export default function Navbar() {
 
   const { user, setUser } = useUser();
-	const [search, setSearch] = useState('');
+	
+  const [search, setSearch] = useState('');
 	const handleSearch = (e) => {
 		e.preventDefault();
 	};
@@ -46,9 +48,7 @@ export default function Navbar() {
                 <Link to={`/userprofile/view/${user.userID}`}>Profile</Link>
                 <Link to="/">Manage Listings</Link>
                 <Link to="/">Settings</Link>
-                <a onClick={() => {
-                  handleLogout();
-                  }}>Logout</a>
+                <a onClick={() => {handleLogout()}}>Logout</a>
               </div>
             </div>
             <a href='/'><FaRegHeart /></a>
@@ -77,7 +77,3 @@ export default function Navbar() {
 		</div>
   );
 }
-
-/*<a onClick={() => window.location.href = '/login'}>Login</a>      
-            <a onClick={() => window.location.href = '/signup'}>Register</a> */
-

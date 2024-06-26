@@ -43,7 +43,6 @@
   width: 100%;
   padding: 10px 20px;
   margin-bottom: 10px;
-  background-color: #28a745;
   border: none;
   border-radius: 4px;
   color: white;
@@ -54,22 +53,31 @@
   display: inline-block;
 }
 
+.bold-link {
+  font-weight: bold;
+  background-color: #28a745;
+}
+
 .bold-link:hover,
 .action-link:hover,
 .action-button:hover {
-  background-color: #218838;
+  opacity: 0.9;
 }
 
-.bold-link {
-  font-weight: bold;
+.action-link {
+  background-color: #17a2b8;
 }
 
-.action-button {
-  background-color: #dc3545;
+.green-button {
+  background-color: green;
 }
 
-.action-button:hover {
-  background-color: #c82333;
+.light-red-button {
+  background-color: lightcoral;
+}
+
+.dark-red-button {
+  background-color: darkred;
 }
 
 .product-details a {
@@ -90,11 +98,9 @@
 
 /* Styling for status banners */
 .status-banner {
-  position: relative;
-  bottom: 10px;
-  left: 10px;
+  position: absolute;
   padding: 10px 20px;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: bold;
   color: white;
   background-color: rgba(0, 0, 0, 0.7); /* Adjust background color and opacity */

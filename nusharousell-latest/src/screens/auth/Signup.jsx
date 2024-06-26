@@ -22,7 +22,7 @@ export default function Signup() {
         password: password,
         firstName: '',
         lastName: '',
-        phoneNumber: '',
+        phoneNumber: '**** ****',
         imageUrl: '',
         ratings: 0,
         meetupLocation: '',
