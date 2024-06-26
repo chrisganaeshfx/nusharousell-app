@@ -36,13 +36,13 @@
   display: flex;
   align-content: center;
   justify-content: flex-start;
-  padding: 10px;
+  padding: 0px;
   color: #555;
 }
 
 .user-info .user-image {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   margin-right: 10px;
 }
@@ -67,7 +67,7 @@
 
 /* Media Query for Responsive Layout */
 @media (max-width: 768px) {
-  .product-card {
+  .product-card img {
     flex: 1 1 100%; /* Full width on smaller screens */
     max-width: 100%;
   }

@@ -13,6 +13,7 @@ export default function Profile() {
     const { products, fetchProducts } = useProducts();
     const [userProducts, setUserProducts] = useState([]);
 
+    console.log ('user:', user);
     useEffect(() => {
         fetchProducts();
     }, [fetchProducts]);

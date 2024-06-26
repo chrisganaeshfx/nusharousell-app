@@ -26,7 +26,7 @@ export const UserProvider = ({ children }) => {
 						userID: currUser.uid,
 						...userData,
 					});
-					console.log('User successfully fetched:', user);
+					console.log('User successfully fetched:', currUser);
 				} catch (err) {
 					console.error('Error fetching user:', err.message);
 				}
