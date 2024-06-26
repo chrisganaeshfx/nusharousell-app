@@ -1,12 +1,13 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { db } from '../../../config/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { MdOutlineConstruction } from 'react-icons/md';
 
 // create context
 export const ProductsContext = createContext();
 
 // create custom hook to use ProductsContext
-export const useProducts = () => {
+export function useProducts() {
   return useContext(ProductsContext);
 }
 
@@ -39,13 +40,18 @@ export const ProductsProvider = ({ children }) => {
         ProductID: doc.id,
         ...doc.data()
       }));
-
+      
       setProducts(productsData);
       setCachedProducts(productsData); // Cache products for future use
-      setLoading(false); // Set loading to false after fetching
-    } catch (error) {
-      console.error('Error fetching products:', error.message);
-      setLoading(false); // Ensure loading state is false in case of error
+      setLoading(false);
+
+      // ! FOR DEBUGGING PURPOSES
+      console.log('Products successfully fetched:', productsData)
+      console.log('Products cached: ', cachedProducts)
+
+    } catch (err) {
+      console.error('Error fetching products:', err.message);
+      setLoading(false);
     }
   };
 

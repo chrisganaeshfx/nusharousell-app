@@ -16,17 +16,17 @@ export const UserProvider = ({ children }) => {
 
 	// Fetch user details from Firebase
 	const fetchUser = async () => {
-		auth.onAuthStateChanged(async (user) => {
-			if (user) {
+		auth.onAuthStateChanged(async (currUser) => {
+			if (currUser) {
 				try {
-					const userDoc = doc(db, 'Users', user.uid);
+					const userDoc = doc(db, 'Users', currUser.uid);
 					const docSnapshot = await getDoc(userDoc);
 					const userData = docSnapshot.data();
 					setUser({
-						userID: user.uid, // Add user's uid to userDetails
+						userID: currUser.uid,
 						...userData,
 					});
-					console.log('User successfully added to state:', user);
+					console.log('User successfully fetched:', user);
 				} catch (err) {
 					console.error('Error fetching user:', err.message);
 				}
@@ -43,7 +43,7 @@ export const UserProvider = ({ children }) => {
 	}, []);
 
 	// Value object for context provider
-	const value = { user , setUser };
+	const value = { user, setUser };
 
 	return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

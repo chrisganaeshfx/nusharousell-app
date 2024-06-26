@@ -2,19 +2,19 @@ import React from "react";
 import Navbar from "../GLOBAL/components/Navbar";
 import EnvironmentFact from "./components/EnvironmentFact";
 import CategoriesFilter from "./components/CategoryButtons";
-import NewlyAdded from "./components/Catalogue";
+import Catalogue from "./components/Catalogue";
 import Footer from "../GLOBAL/components/Footer";
 
 import "../styles/Homepage.css";
 
-export default function Homepage({ userDetails, setUserDetails }) {
+export default function Homepage() {
 
   return (
     <div className='home'>
-      <Navbar className='header' userDetails={userDetails} setUserDetails={setUserDetails}/>
+      <Navbar className='header'/>
       <div>
         <CategoriesFilter />
-        <NewlyAdded />
+        <Catalogue />
       </div>
       <Footer className='footer'/>
     </div>
