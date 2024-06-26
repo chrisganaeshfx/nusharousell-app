@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dropdown from '../sell/FormDropdown';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
@@ -7,18 +7,30 @@ import { useUser } from '../GLOBAL/contexts/UserContext';
 
 export default function EditProfile() {
   const { user } = useUser();
-  const [userName, setUserName] = useState(user?.userName || '');
-  const [firstName, setFirstName] = useState(user?.firstName || '');
-  const [lastName, setLastName] = useState(user?.lastName || '');
-  const [meetupLocation, setMeetupLocation] = useState(user?.meetupLocation || '');
-  const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber || '');
-
+  const [userName, setUserName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [meetupLocation, setMeetupLocation] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
-  const [imageUrl, setImageUrl] = useState(user?.imageUrl || '');
-
+  const [imageUrl, setImageUrl] = useState('');
   const [error, setError] = useState('');
   const types = ['image/png', 'image/jpeg'];
+
+  useEffect(() => {
+    if (user) {
+      setUserName(user.userName || '');
+      setFirstName(user.firstName || '');
+      setLastName(user.lastName || '');
+      setMeetupLocation(user.meetupLocation || '');
+      setPhoneNumber(user.phoneNumber || '');
+      setImageUrl(user.imageUrl || '');
+      if (user.imageUrl) {
+        setImagePreviewUrl(user.imageUrl);
+      }
+    }
+  }, [user]);
 
   const imageHandler = (e) => {
     let file = e.target.files[0];
@@ -35,11 +47,10 @@ export default function EditProfile() {
 
   const userImageUploader = (imageFile, userID) => {
     if (!imageFile) {
-      return null;
+      return Promise.resolve(imageUrl); // Use existing image URL if no new image is selected
     } else {
       return new Promise((resolve, reject) => {
         const imageRef = ref(storage, `user-images/${userID}_${imageFile.name}`);
-
         const uploadTask = uploadBytesResumable(imageRef, imageFile);
         uploadTask.on(
           'state_changed',
@@ -93,22 +104,21 @@ export default function EditProfile() {
   const handleEditProfile = async (e) => {
     e.preventDefault();
     try {
-      await userImageUploader(imageFile, user.userID);
-      await updateUserProducts(userName, imageUrl);
+      const uploadedImageUrl = await userImageUploader(imageFile, user.userID);
 
-      console.log('imageUrl final is ', imageUrl);
       const updatedUserData = {
         userName: userName,
         firstName: firstName,
         lastName: lastName,
         meetupLocation: meetupLocation,
         phoneNumber: phoneNumber,
-        imageUrl: imageUrl,
+        imageUrl: uploadedImageUrl,
       };
 
       const userDoc = doc(db, 'Users', user.userID);
       await updateDoc(userDoc, updatedUserData);
 
+      await updateUserProducts(userName, uploadedImageUrl);
 
       const latestUserDoc = await getDoc(userDoc);
       console.log('Successfully updated user profile to ', latestUserDoc.data());
@@ -131,7 +141,7 @@ export default function EditProfile() {
           <h5>Profile Photo</h5>
           <div className='image-preview'>
             {imagePreviewUrl && (
-              <img src={imagePreviewUrl} alt='Product' className='preview-image' />
+              <img src={imagePreviewUrl} alt='Profile' className='preview-image' />
             )}
           </div>
           <input type='file' onChange={imageHandler} />
@@ -143,7 +153,7 @@ export default function EditProfile() {
           <input
             value={userName}
             type='text'
-            placeholder={user.userName}
+            placeholder='Enter your username'
             onChange={(e) => setUserName(e.target.value)}
           />
           <br />
