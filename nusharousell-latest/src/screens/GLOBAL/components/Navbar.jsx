@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { auth } from '../../../config/firebase';
-import { useUser } from '../contexts/UserContext';
+import { useAuthUser } from '../contexts/AuthUserContext';
 
 import logo from '../assets/logos/horizontal-logo.png';
 import { FaSearch, FaRegHeart } from 'react-icons/fa';
@@ -11,7 +11,7 @@ import '../../styles/Navbar.css';
 
 export default function Navbar() {
 
-  const { user, setUser } = useUser();
+  const { user, setUser } = useAuthUser();
 	
   const [search, setSearch] = useState('');
 	const handleSearch = (e) => {

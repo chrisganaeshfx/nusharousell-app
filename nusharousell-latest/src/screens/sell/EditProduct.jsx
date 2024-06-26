@@ -3,13 +3,13 @@ import { useParams } from 'react-router-dom';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db, storage } from '../../config/firebase';
-import { useUser } from '../GLOBAL/contexts/UserContext';
+import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
 import Dropdown from './FormDropdown';
 import '../styles/AddProduct.css'; // Import the CSS file
 
 export default function EditProduct() {
   const { productID } = useParams();
-  const { user } = useUser();
+  const { user } = useAuthUser();
 
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');

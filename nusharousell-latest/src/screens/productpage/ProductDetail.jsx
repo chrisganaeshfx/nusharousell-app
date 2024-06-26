@@ -3,12 +3,12 @@ import { useParams, Link } from 'react-router-dom';
 import { db } from '../../config/firebase';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import '../styles/ProductDetail.css';
-import { useUser } from '../GLOBAL/contexts/UserContext';
+import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
 
 export default function ProductDetail() {
   const { productID } = useParams();
   const [product, setProduct] = useState(null);
-  const { user } = useUser();
+  const { user } = useAuthUser();
   const [userIsSeller, setUserIsSeller] = useState(false);
 
   useEffect(() => {

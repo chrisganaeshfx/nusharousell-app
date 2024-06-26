@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useUser } from '../../GLOBAL/contexts/UserContext';
+import { useAuthUser } from '../../GLOBAL/contexts/AuthUserContext';
 import { useProducts } from '../../GLOBAL/contexts/ProductsContext';
 import { Link } from 'react-router-dom';
 import '../../styles/ProductList.css';
 
 export default function Catalogue() {
 	const { products, fetchProducts, loading } = useProducts();
-	const { user } = useUser();
+	const { user } = useAuthUser();
 	const [availableProducts, setAvailableProducts] = useState([]);
 
 	useEffect(() => {

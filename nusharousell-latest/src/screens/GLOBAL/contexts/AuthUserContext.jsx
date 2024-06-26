@@ -3,15 +3,15 @@ import { auth, db } from '../../../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 // create context
-const UserContext = createContext();
+const AuthUserContext = createContext();
 
 // Custom hook to use UserProvider
-export const useUser = () => {
-	return useContext(UserContext);
+export const useAuthUser = () => {
+	return useContext(AuthUserContext);
 };
 
 // UserProvider component
-export const UserProvider = ({ children }) => {
+export const AuthUserProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 
 	// Fetch user details from Firebase
@@ -23,7 +23,6 @@ export const UserProvider = ({ children }) => {
 					const docSnapshot = await getDoc(userDoc);
 					const userData = docSnapshot.data();
 					setUser({
-						userID: currUser.uid,
 						...userData,
 					});
 					console.log('User successfully fetched:', currUser);
@@ -45,5 +44,5 @@ export const UserProvider = ({ children }) => {
 	// Value object for context provider
 	const value = { user, setUser };
 
-	return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+	return <AuthUserContext.Provider value={value}>{children}</AuthUserContext.Provider>;
 };

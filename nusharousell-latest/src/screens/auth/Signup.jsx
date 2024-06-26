@@ -17,6 +17,7 @@ export default function Signup() {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       const userDoc = doc(db, 'Users', cred.user.uid);
       await setDoc(userDoc, {
+        userID: cred.user.uid,
         userName: userName,
         email: email,
         password: password,

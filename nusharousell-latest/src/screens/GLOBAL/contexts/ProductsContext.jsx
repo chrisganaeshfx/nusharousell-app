@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { db } from '../../../config/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import { MdOutlineConstruction } from 'react-icons/md';
 
 // create context
 export const ProductsContext = createContext();

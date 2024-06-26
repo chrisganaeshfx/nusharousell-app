@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useUser } from '../GLOBAL/contexts/UserContext';
+import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
 import { db, storage } from '../../config/firebase';
 import { setDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import '../styles/AddProduct.css';
 
 export default function AddProduct() {
-	const { user } = useUser();
+	const { user } = useAuthUser();
 	const [productName, setProductName] = useState('');
 	const [category, setCategory] = useState('');
 	const [condition, setCondition] = useState('');
@@ -112,7 +112,7 @@ export default function AddProduct() {
 			setImageUrl('');
 			setError('');
 			document.getElementById('file').value = '';
-			window.location.href = `/profile/view/${user.userID}`;
+			window.location.href = `/userprofile/view/${user.userID}`;
 		} catch (err) {
 			setError(err.message);
 		}

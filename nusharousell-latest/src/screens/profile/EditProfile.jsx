@@ -3,10 +3,10 @@ import Dropdown from '../sell/FormDropdown';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc, getDoc, query, where, getDocs, collection } from 'firebase/firestore';
 import { db, storage } from '../../config/firebase';
-import { useUser } from '../GLOBAL/contexts/UserContext';
+import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
 
 export default function EditProfile() {
-  const { user } = useUser();
+  const { user } = useAuthUser();
   const [userName, setUserName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');

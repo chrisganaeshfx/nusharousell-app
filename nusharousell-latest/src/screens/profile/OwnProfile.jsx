@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { IoMdMail } from 'react-icons/io';
 import { FaPhoneAlt, FaStar, FaSchool } from 'react-icons/fa';
-import { useUser } from '../GLOBAL/contexts/UserContext';
+import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
 import { useProducts } from '../GLOBAL/contexts/ProductsContext';
 
 import '../styles/Profile.css'; // Keep general profile styles
 import '../styles/ProductList.css'; // Use product card styles from ProductList.css
 
-export default function Profile() {
-    const { user } = useUser();
+export default function OwnProfile() {
+    const { user } = useAuthUser();
     const { products, fetchProducts } = useProducts();
     const [userProducts, setUserProducts] = useState([]);
 
