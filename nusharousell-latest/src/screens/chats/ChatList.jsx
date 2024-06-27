@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {query, where, collection, getDocs, getDoc } from "firebase/firestore";
 import { useChats } from '../GLOBAL/contexts/ChatsContext';
-import '../styles/Chat.css';
+import '../styles/Chats.css';
 import { db } from '../../config/firebase';
 
 function ChatList ({user, userDetails}) {

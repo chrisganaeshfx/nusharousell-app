@@ -1,14 +1,13 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { auth, db } from '../../../config/firebase';
 import { query, where, addDoc, doc, getDocs } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
 
 // create context
 const ChatsContext = createContext();
 
 // generate custom hook
 export const useChats= () => {
-  useContext(ChatsContext);
+  return useContext(ChatsContext);
 };
 
 const INITIAL_STATE = {

@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { collection, query, where, onSnapshot, addDoc, serverTimestamp, orderBy } from "firebase/firestore";
 import { useChats } from '../GLOBAL/contexts/ChatsContext';
 import { db, auth } from "../../config/firebase";
 import ChatList from '../chats/ChatList';
-import '../styles/Chat.css';
+import '../styles/Chats.css';
 
 const ChatPage = () => {
   const { state } = useChats();

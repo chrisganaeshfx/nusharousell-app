@@ -71,7 +71,7 @@ export default function App() {
 										element={<EditProfile />}
 									/>
 									<Route
-										path='/chat'
+										path='/chats'
 										element={<ChatLayout />}>
 										<Route
 											path=''
