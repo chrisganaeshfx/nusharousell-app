@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { db } from '../../config/firebase';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import '../styles/ProductDetail.css';
 import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
+import { useChats } from '../GLOBAL/contexts/ChatsContext';
 
 export default function ProductDetail() {
   const { productID } = useParams();
   const [product, setProduct] = useState(null);
   const { user } = useAuthUser();
   const [userIsSeller, setUserIsSeller] = useState(false);
+  const { checkChatroom } = useChats();
 
   console.log('productID: ', productID);
 
@@ -37,6 +39,20 @@ export default function ProductDetail() {
 
     fetchProduct();
   }, [productID, user]);
+
+  const handleChatClick = async (otherUserId) => {
+    try {
+      if (!user) {
+        throw new Error("User is not logged in.");
+      }
+  
+      const currUserID = user.userID;
+      const chatroomId = await checkChatroom(currUserID, otherUserId); 
+      Navigate(`/chats/${chatroomId}`);
+    } catch (err) {
+      console.error("Error handling chat click:", err);
+    }
+  };
 
   const handleMarkAsReserved = async () => {
     try {
@@ -123,7 +139,7 @@ export default function ProductDetail() {
           <div className='action-container'>
             {userIsSeller ? (
               <>
-                <Link to={`/chats/${productID}`} className='bold-link'>
+                <Link to={`/chats/${productID}`} onClick={() => handleChatClick} className='bold-link'>
                   View Chats
                 </Link>
                 <Link to={`/product/edit/${productID}`} className='action-link'>

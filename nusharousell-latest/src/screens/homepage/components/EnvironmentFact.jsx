@@ -13,9 +13,11 @@ export default function EnvironmentFact() {
     fetchFact();
   }, [fetchFact]);
 
+  /*
   const handleRefreshClick = () => {
     fetchFact();
   };
+  */
 
   return (
     <>

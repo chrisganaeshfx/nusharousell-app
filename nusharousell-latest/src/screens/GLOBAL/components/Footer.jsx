@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import logo from '../assets/logos/logo.png';
 import "../../styles/Footer.css";
 
@@ -17,14 +18,13 @@ export default function Footer(){
             </div>
             <div className='Creators'>
                 <h3>Creators</h3>
-                <a href="https://github.com/chrisganaeshfx">Chris</a>
-                <a href="https://github.com/Eun18">Eunice</a>
+                <Link to="https://github.com/chrisganaeshfx">Chris</Link>
+                <Link href="https://github.com/Eun18">Eunice</Link>
             </div>
             <div className='Links'>
                 <h3>Links</h3>
                 <a href="/">Home</a>
-                <a href="/screens/chats/Chat">Chats</a>
-                <a href="#">Categories</a>
+                <Link to='/chats'>Chats</Link>
             </div>            
         </div>
     );

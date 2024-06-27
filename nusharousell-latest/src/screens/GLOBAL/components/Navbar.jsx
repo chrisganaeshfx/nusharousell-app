@@ -48,10 +48,10 @@ export default function Navbar() {
                 <Link to={`/userprofile/view/${user.userID}`}>Profile</Link>
                 <Link to="/">Manage Listings</Link>
                 <Link to="/">Settings</Link>
-                <a onClick={() => {handleLogout()}}>Logout</a>
+                <Link onClick={() => {handleLogout()}}>Logout</Link>
               </div>
             </div>
-            <a href='/'><FaRegHeart /></a>
+            <Link to='/'><FaRegHeart /></Link>
             <Link to="/chats"><MdChatBubbleOutline/></Link>
             <Link to="/product/add">Sell</Link>
           </div>
