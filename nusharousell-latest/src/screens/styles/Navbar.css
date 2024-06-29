@@ -10,12 +10,10 @@
   .header {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-around;
     padding: 0px;
     font-size: 30px;
   }
-  
   
   .top-header {
     display: flex;
@@ -31,9 +29,8 @@
   }
   
   /* Middle header section (search box) */
-  .bottom-header {
+  .middle-header {
     display: flex;
-    flex: 1;
     justify-content: center;
   }
   
@@ -42,13 +39,13 @@
     align-items: left;
   }
   
-  .bottom-header .search_box input {
+  .middle-header .search_box input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
   }
   
-  .bottom-header .search_box button {
+  .middle-header .search_box button {
     padding: 10px;
     background: #EEEEEE;
     border: none;

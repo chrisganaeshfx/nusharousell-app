@@ -1,75 +1,52 @@
 import React, { useState, useEffect } from "react";
-import {query, where, collection, getDocs, getDoc } from "firebase/firestore";
+import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
 import { useChats } from '../GLOBAL/contexts/ChatsContext';
-import '../styles/Chats.css';
-import { db } from '../../config/firebase';
+import '../styles/ChatList.css';
+import { Link } from 'react-router-dom';
 
-function ChatList ({user, userDetails}) {
-  const [chats, setChats] = useState([]);
+function ChatList () {
+  const { user: currUser } = useAuthUser();
+  const { chats, fetchChats, fetchOtherUser } = useChats();
+  const [userChats, setUserChats] = useState([]);
+  const [otherUsers, setOtherUsers] = useState({});
 
-  const { dispatch } = useChats();
-  
   useEffect(() => {
-    const getChats = async () => {
-      if (user) {
-        const chatroomsRef = collection(db, "Chatroom");
-        const q = query(chatroomsRef, where("Users", "array-contains", user.uid));
-        const querySnapshot = await getDocs(q);
-        const chatDataPromises = querySnapshot.docs.map(async (doc) => {
-          const chatroom = doc.data();
-          const otherUserId = chatroom.Users.find((uid) => uid !== user.uid);
-          
-          const otherUserDoc = await getDoc(doc(db, "Users", otherUserId));
-          const otherUserInfo = otherUserDoc.exists() ? otherUserDoc.data() : null;
-          
-          return { id: doc.id, otherUserInfo };
-        });
+		fetchChats();
+	}, [fetchChats]);
 
-        const chatData = await Promise.all(chatDataPromises);
-        setChats(chatData);
-      }
-    };
+  useEffect(() => {
+    if (currUser) {
+      const filteredChats = chats.filter((chat) => chat && chat.Users && chat.Users.includes(currUser.userID));
+      setUserChats(filteredChats);
 
-    getChats();
-  }, [user]);
+      const fetchOtherUsers = async () => {
+        const usersData = {};
+        for (const chat of filteredChats) {
+          const otherUserData = await fetchOtherUser(chat.Users, currUser.userID);
+          usersData[chat.chatroomID] = otherUserData ? otherUserData.userName : 'Unknown User';
+        }
+        setOtherUsers(usersData);
+      };
 
-  const handleSelect = (chat) => {
-    dispatch({ type: "SET_CHATROOM_ID", payload: chat.id });
-  };
+      fetchOtherUsers();
+    }
+  }, [currUser, chats, fetchOtherUser]);
 
-  return (
-    <div className="chats-list">
-      {chats.map((chat) => (
-        <div key={chat.id} className="chat-list-item" onClick={() => handleSelect(chat)}>
-          {chat.otherUserInfo ? (
-            <>
-              <img src={chat.otherUserInfo.image} alt="User" />
-              <div className="chat-info">
-                <span>{chat.otherUserInfo.userName}</span>
-              </div>
-            </>
-          ) : (
-            <div className="chat-info">
-              <span>Loading...</span>
-            </div>
-          )}
+return (
+  <div className="chat-list">
+    <h2>My Chats</h2>
+    {userChats.length > 0 ? (
+      userChats.map(chat => (
+        <div key={chat.chatroomID} className="chat-item">
+          <Link to={`/chats/${chat.chatroomID}`}> {otherUsers[chat.chatroomID] || 'Loading...'} </Link>
+          <p>{chat.lastMessage}</p>
         </div>
-      ))}
-    </div>
-  );
+      ))
+    ) : (
+      <p>No chats found</p>
+    )}
+  </div>
+);
 };
 
 export default ChatList;
-
-/*
-Room - roomID - stores the user id of the two users in chat
-Messages - stores all messages between the two users
-
-when chat with seller pressed, redirect to  chatroom
-ideally to have a default popup of the product buyer is interested in, and a message 'I would like to buy this product'
-
-if buyer-seller chatroom exists, route to the room using room id, else create new room
-show all chats at the side, ideally to display most recent message
-if message unread -> create notif
-
-*/

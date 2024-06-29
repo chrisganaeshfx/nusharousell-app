@@ -16,7 +16,7 @@ import EditProduct from './screens/sell/EditProduct';
 import Profile from './screens/profile/Profile';
 import EditProfile from './screens/profile/EditProfile';
 // chat
-import ChatLayout from './screens/chats/ChatLayout';
+import ChatList from './screens/chats/ChatList';
 import ChatPage from './screens/chats/ChatPage';
 
 export default function App() {
@@ -70,22 +70,8 @@ export default function App() {
 										path='/userprofile/edit/:userID'
 										element={<EditProfile />}
 									/>
-									<Route
-										path='/chats'
-										element={<ChatLayout />}>
-										<Route
-											path=''
-											element={
-												<div className='no-chat-selected'>
-													Please select a chat to start messaging
-												</div>
-											}
-										/>
-										<Route
-											path=':chatroomId'
-											element={<ChatPage />}
-										/>
-									</Route>
+									<Route path="/chats" element={<ChatList />} />
+          							<Route path="/chats/:chatroomId" element={<ChatPage />} />
 									<Route
 										path='*'
 										element={<h1>Error 404: Page not found</h1>}

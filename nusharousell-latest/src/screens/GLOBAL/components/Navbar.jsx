@@ -52,7 +52,7 @@ export default function Navbar() {
               </div>
             </div>
             <Link to='/'><FaRegHeart /></Link>
-            <Link to="/chats"><MdChatBubbleOutline/></Link>
+            <a href="/chats"> <MdChatBubbleOutline/></a>
             <Link to="/product/add">Sell</Link>
           </div>
         ) : (
@@ -62,7 +62,7 @@ export default function Navbar() {
           </div>
         )}
       </div>       
-			<div className='bottom-header'>
+			<div className='middle-header'>
 				<div className='search_box'>
 					<input
 						type='text'
