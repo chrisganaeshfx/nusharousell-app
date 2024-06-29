@@ -90,7 +90,9 @@ export default function Profile() {
 				
 			</div>
 			<div className='listing-column'>
-				<h2>My Listings</h2>
+				<h2>
+					{currUser.userID === seller.userID ? 'My Listings' : `${seller.userName}'s Listings`}
+				</h2>
 				<div className='product-list-container'>
 					<div className='product-list'>
 						{sellerProducts.length > 0 ? (

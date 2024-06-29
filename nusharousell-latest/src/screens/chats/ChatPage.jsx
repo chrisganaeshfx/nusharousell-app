@@ -1,75 +1,114 @@
 import React, { useEffect, useState } from "react";
-import { collection, query, where, onSnapshot, addDoc, serverTimestamp, orderBy } from "firebase/firestore";
+import { useParams } from 'react-router-dom';
+import { db } from '../../config/firebase';
+import { collection, doc, addDoc, serverTimestamp, query, orderBy, getDocs, getDoc } from 'firebase/firestore';
 import { useChats } from '../GLOBAL/contexts/ChatsContext';
-import { db, auth } from "../../config/firebase";
-import ChatList from '../chats/ChatList';
-import '../styles/Chats.css';
+import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
+import '../styles/ChatPage.css';
 
 const ChatPage = () => {
-  const { state } = useChats();
+  const { chatroomId } = useParams();
+  const { user: currUser } = useAuthUser();
+  const { fetchOtherUser, updateLastMessage } = useChats();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [otherUser, setOtherUser] = useState(null);
+
+  const fetchMessages = async (chatroomId) => {
+    try {
+      const chatroomRef = doc(db, 'Chatroom', chatroomId);
+      const messagesRef = collection(chatroomRef, 'Messages');
+      const q = query(messagesRef, orderBy('createdAt'));
+      const querySnapshot = await getDocs(q);
+      const messages = querySnapshot.docs.map(doc => doc.data());
+      setMessages(messages);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
 
   useEffect(() => {
-    if (state.chatroomId) {
-      const q = query(
-        collection(db, "Messages"),
-        where("chatroomId", "==", state.chatroomId),
-        orderBy("timestamp", "asc")
-      );
+    const fetchChatroomData = async (chatroomId) => {
+        try {
+          console.log("Fetching chatroom data for ID:", chatroomId);
+          const chatroomRef = doc(db, 'Chatroom', chatroomId);
+          console.log("Chatroom reference:", chatroomRef);
+          const chatroomDoc = await getDoc(chatroomRef);
+          console.log("Chatroom document:", chatroomDoc);
+          if (chatroomDoc.exists()) {
+            const chatroomData = chatroomDoc.data();
+            console.log("Chatroom data fetched:", chatroomData);
+            const otherUserData = await fetchOtherUser(chatroomData.Users, currUser.userID);
+            setOtherUser(otherUserData);
+            console.log("Other user data set:", otherUserData);
+            await fetchMessages(chatroomId);
+          }
+        } catch (error) {
+          console.error("Error fetching chatroom data:", error);
+        }
+    };
 
-      const unsubscribe = onSnapshot(q, (snapshot) => {
-        const msgs = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setMessages(msgs);
+    fetchChatroomData(chatroomId);
+  }, [chatroomId, currUser.userID, fetchOtherUser]);
+
+
+  const addMessage = async (chatroomId, senderID, content) => {
+    try {
+      const chatroomRef = doc(db, 'Chatroom', chatroomId);
+      const messagesRef = collection(chatroomRef, 'Messages');
+      await addDoc(messagesRef, {
+        senderID: senderID,
+        content: content,
+        createdAt: serverTimestamp()
       });
-
-      return () => unsubscribe();
+  
+      // Optionally update the last message in the chatroom document
+      await updateLastMessage(chatroomId, newMessage);
+      await fetchMessages(chatroomId);
+    } catch (error) {
+      console.error("Error adding message:", error);
     }
-  }, [state.chatroomId]);
+  };
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (newMessage.trim()) {
-      await addDoc(collection(db, "Messages"), {
-        chatroomId: state.chatroomId,
-        senderId: auth.currentUser.uid,
-        text: newMessage,
-        timestamp: serverTimestamp(),
-      });
-      setNewMessage("");
+    if (chatroomId && newMessage.trim() !== "") {
+      await addMessage(chatroomId, currUser.userID, newMessage);
+      setNewMessage(""); // Clear the input field after sending the message
     }
   };
 
   return (
     <div className="chat-page">
-      <ChatList />
-      <div className="chat-window">
-        {state.chatroomId ? (
-          <div className="chat-window-container">
-            <div className="messages">
-              {messages.map((msg) => (
-                <div key={msg.id} className={`message ${msg.senderId === auth.currentUser.uid ? "sent" : "received"}`}>
-                  <p>{msg.text}</p>
-                </div>
-              ))}
-            </div>
-            <form onSubmit={handleSendMessage} className="message-input-container">
-              <input
-                type="text"
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type your message..."
-              />
-              <button type="submit">Send</button>
-            </form>
-          </div>
+      <h2>Chat</h2>
+      <div className="participants">
+        <h4>Participants:</h4>
+        {otherUser ? (
+          <div className="participant"><p><strong>{otherUser.userName}</strong> and <strong>You</strong></p></div>
         ) : (
-          <div className="no-chat-selected">Please select a chat to start messaging</div>
+          <p>Loading participant...</p>
         )}
       </div>
+      <div className="messages">
+        {messages.length > 0 ? (
+          messages.map((msg, index) => (
+            <div key={index} className="message">
+              <p><strong>{msg.senderID === currUser.userID ? 'You' : otherUser?.userName}</strong>: {msg.content}</p>
+              <p><em>{msg.createdAt?.toDate ? new Date(msg.createdAt.toDate()).toString() : 'Sending...'}</em></p>
+            </div>
+          ))
+        ) : (
+          <p>No messages found</p>
+        )}
+      </div>
+      <form className="new-message">
+        <textarea 
+          value={newMessage} 
+          onChange={(e) => setNewMessage(e.target.value)} 
+          placeholder="Type your message here..."
+        />
+        <button type="button" onClick={handleSendMessage}>Send</button>
+      </form>
     </div>
   );
 };

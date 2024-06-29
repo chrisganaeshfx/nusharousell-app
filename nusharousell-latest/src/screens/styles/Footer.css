@@ -12,15 +12,15 @@
 }
 
 .footer .logo img {
-    max-width: 100px; /* Adjust the size of the logo here */
-    height: auto;
+    width: 100px; /* Adjust the size of the logo here */
+    height: 100px;
 }
 
 .footer .About,
 .footer .Creators,
 .footer .Links {
     flex: 1;
-    margin: 0 20px;
+    margin: 0 10px;
 }
 
 .footer h3 {

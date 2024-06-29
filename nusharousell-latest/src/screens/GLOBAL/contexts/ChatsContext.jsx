@@ -1,81 +1,87 @@
-import React, { createContext, useContext, useEffect, useReducer } from 'react';
-import { auth, db } from '../../../config/firebase';
-import { query, where, addDoc, doc, getDocs } from 'firebase/firestore';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import { db } from '../../../config/firebase';
+import { getDocs, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 
 // create context
-const ChatsContext = createContext();
+export const ChatsContext = createContext();
 
 // generate custom hook
-export const useChats= () => {
+export function useChats() {
   return useContext(ChatsContext);
 };
-
-const INITIAL_STATE = {
-	chatroomId: null,
-	user: null,
-};
-
-const chatReducer = (state, action) => {
-	switch (action.type) {
-		case 'SET_CHATROOM_ID':
-			return {
-				...state,
-				chatroomId: action.payload,
-			};
-		case 'SET_USER':
-			return {
-				...state,
-				user: action.payload,
-			};
-		default:
-			return state;
-	}
-};
-
 export const ChatsProvider = ({ children }) => {
-	const [state, dispatch] = useReducer(chatReducer, INITIAL_STATE);
+	const [chats, setChats] = useState([]);
+  	const [cachedChats, setCachedChats] = useState([]);
+  	const [loading, setLoading] = useState(true); // Loading state for initial fetch
 
-	useEffect(() => {
-		const unsubscribe = auth.onAuthStateChanged((user) => {
-			if (user) {
-				dispatch({ type: 'SET_USER', payload: user });
-			} else {
-				dispatch({ type: 'SET_USER', payload: null });
-			}
-		});
+  // Function to fetch chats from Firestore
+  const fetchChats = useCallback(async () => {
+    try {
+      setLoading(true); // Set loading to true before fetching
 
-		return unsubscribe;
-	}, []);
+      if (cachedChats.length > 0) {
+        setChats(cachedChats);
+        setLoading(false); 
+        return;
+      }
 
-	const checkChatroom = async (currentUseruid, otherUserId) => {
-		const chatroomRef = doc(db, 'ChatRoom');
-		const q = query(chatroomRef, where('Users', 'array-contains', currentUseruid));
-		const querySnapshot = await getDocs(q);
+      const chatsRef = collection(db, 'Chatroom');
+      const querySnapshot = await getDocs(chatsRef);
+      const chatsData = querySnapshot.docs.map(doc => ({
+		chatroomID: doc.id,
+        ...doc.data()
+      }));
+      
+      setChats(chatsData);
+      setCachedChats(chatsData);
+      setLoading(false);
 
-		let foundChatroom = null;
-		querySnapshot.forEach((doc) => {
-			const chatroom = doc.data();
-			if (chatroom.Users.includes(otherUserId)) {
-				foundChatroom = doc.id;
-			}
-		});
+      console.log('Chats successfully fetched:', chatsData);
+      console.log('Chats cached:', cachedChats);
 
-		if (foundChatroom) {
-			return foundChatroom;
-		} else {
-			const newChatroomRef = doc(db, 'ChatRoom').doc();
+    } catch (err) {
+      console.error('Error fetching chats:', err.message);
+      setLoading(false);
+    }
+  }, [cachedChats]);
 
-			await addDoc(newChatroomRef, {
-				Users: [currentUseruid, otherUserId],
-				createdAt: new Date(),
-			});
-			return newChatroomRef.id;
-		}
-	};
+  const getOtherUserID = (userIDs, currentUserID) => {
+    return userIDs.find(id => id !== currentUserID);
+  };
 
-	return (
-		<ChatsContext.Provider value={{ state, dispatch, checkChatroom }}>
-			{children}
-		</ChatsContext.Provider>
-	);
+  // Function to fetch the other user's data
+  const fetchOtherUser = async (userIDs, currentUserID) => {
+    const otherUserID = getOtherUserID(userIDs, currentUserID);
+    if (otherUserID) {
+      const otherUserRef = doc(db, 'Users', otherUserID);
+      const otherUserDoc = await getDoc(otherUserRef);
+      if (otherUserDoc.exists()) {
+        return otherUserDoc.data();
+      }
+    }
+    return null;
+  };
+
+  const updateLastMessage = async (chatroomId, newMessage) => {
+    try {
+      const chatroomRef = doc(db, 'Chatroom', chatroomId);
+      await setDoc(chatroomRef, {
+        lastMessage: newMessage
+      }, { merge: true });
+      
+      fetchChats();
+    } catch (error) {
+      console.error('Error updating last message:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchChats();
+  }, [fetchChats]);
+
+  return (
+    <ChatsContext.Provider value={{ chats, fetchChats, loading, getOtherUserID, fetchOtherUser, updateLastMessage }}>
+      {children}
+    </ChatsContext.Provider>
+  );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { db } from '../../config/firebase';
-import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, deleteDoc, query, collection, where, getDocs, serverTimestamp, addDoc, arrayUnion, setDoc } from 'firebase/firestore';
 import '../styles/ProductDetail.css';
 import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
 import { useChats } from '../GLOBAL/contexts/ChatsContext';
@@ -11,7 +11,8 @@ export default function ProductDetail() {
   const [product, setProduct] = useState(null);
   const { user } = useAuthUser();
   const [userIsSeller, setUserIsSeller] = useState(false);
-  const { checkChatroom } = useChats();
+  const { fetchChats } = useChats();
+  const navigate = useNavigate();
 
   console.log('productID: ', productID);
 
@@ -40,17 +41,65 @@ export default function ProductDetail() {
     fetchProduct();
   }, [productID, user]);
 
-  const handleChatClick = async (otherUserId) => {
+  const handleChatClick = async () => {
+    if (!user || !product) return;
+
     try {
-      if (!user) {
-        throw new Error("User is not logged in.");
+      const currentUserID = user.userID;
+      const otherUserID = product.sellerID;
+
+      // Query to find chatroom where Users array contains the current user ID
+      const q = query(
+        collection(db, 'Chatroom'),
+        where('Users', 'array-contains', currentUserID)
+      );
+
+      // Execute the query
+      const querySnapshot = await getDocs(q);
+
+      let foundChatroom = null;
+
+      // Check each document to see if it also contains the other user ID
+      querySnapshot.forEach((doc) => {
+        const chatroom = doc.data();
+        if (chatroom.Users.includes(otherUserID)) {
+          foundChatroom = doc.id;
+        }
+      });
+
+      if (foundChatroom) {
+        navigate(`/chats`); 
+      } else {
+        // Create a new chatroom if not found
+        const newChatData = {
+          Users: [currentUserID, otherUserID],
+          createdAt: serverTimestamp(),
+          lastMessage: ""
+        };
+
+        const newChatroomRef = await addDoc(collection(db, 'Chatroom'), newChatData);
+        const chatroomID = newChatroomRef.id;
+
+        const chatroomRef = doc(db, 'Chatroom', chatroomID);
+        await setDoc(chatroomRef, { ...newChatData, chatroomID });
+
+        const userDocRef = doc(db, 'Users', currentUserID);
+        const sellerDocRef = doc(db, 'Users', otherUserID);
+
+        await updateDoc(userDocRef, {
+          userChats: arrayUnion(chatroomID),
+        });
+
+        await updateDoc(sellerDocRef, {
+          userChats: arrayUnion(chatroomID),
+        });
+
+        fetchChats(); // Refresh chats after creating a new chatroom
+        navigate(`/chats/${chatroomID}`); // Navigate to the new chatroom
+        window.location.reload();
       }
-  
-      const currUserID = user.userID;
-      const chatroomId = await checkChatroom(currUserID, otherUserId); 
-      Navigate(`/chats/${chatroomId}`);
-    } catch (err) {
-      console.error("Error handling chat click:", err);
+    } catch (error) {
+      console.error("Error checking or creating chatroom:", error);
     }
   };
 
@@ -139,9 +188,9 @@ export default function ProductDetail() {
           <div className='action-container'>
             {userIsSeller ? (
               <>
-                <Link to={`/chats/${productID}`} onClick={() => handleChatClick} className='bold-link'>
+                <button onClick={handleChatClick} className='bold-link'>
                   View Chats
-                </Link>
+                </button>
                 <Link to={`/product/edit/${productID}`} className='action-link'>
                   Edit Listing
                 </Link>
@@ -163,9 +212,9 @@ export default function ProductDetail() {
               </>
             ) : (
               <>
-                <Link to={`/chats/${productID}`} className='bold-link'>
+                <button onClick={handleChatClick} className='bold-link'>
                   Chat with Seller
-                </Link>
+                </button>
                 <Link to={`/like/${productID}`} className='action-link'>
                   Like
                 </Link>

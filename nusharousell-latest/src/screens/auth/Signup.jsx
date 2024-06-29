@@ -28,6 +28,7 @@ export default function Signup() {
         ratings: 0,
         meetupLocation: '',
         userProducts: [],
+		userChats: [],
         createdAt: new Date()
       });
       setUserName('');
