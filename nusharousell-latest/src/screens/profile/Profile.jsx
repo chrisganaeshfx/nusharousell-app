@@ -12,7 +12,7 @@ import '../styles/ProductList.css'; // Use product card styles from ProductList.
 export default function Profile() {
   // Get the current user from AuthUserContext
   const { user } = useAuthUser();
-  const currUser = { user };
+  const currUser = user;
 
   // Get all users from UsersContext
 	const { users } = useUsers();
@@ -41,6 +41,8 @@ export default function Profile() {
 		fetchProducts();
 	}, [fetchProducts]);
 
+console.log('CurrUser: ', currUser);
+console.log('Seller: ', seller);
 
   // Effect to filter products of the selected seller
   useEffect(() => {
