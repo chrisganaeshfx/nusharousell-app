@@ -111,7 +111,7 @@ export default function AddProduct() {
 			setImageUrl('');
 			setError('');
 			document.getElementById('file').value = '';
-			// window.location.href = `/userprofile/view/${user.userID}`;
+			window.location.href = `/userprofile/view/${user.userID}`;
 		} catch (err) {
 			setError(err.message);
 		}
@@ -162,7 +162,7 @@ export default function AddProduct() {
 				<Dropdown
 					label='Category'
 					value={category}
-					options={['Clothes', 'Electronics', 'Sports', 'Health']}
+					options={['Stationery', 'Clothes', 'Electronics', 'Sports', 'Health']}
 					onChange={setCategory}
 				/>
 				<Dropdown
