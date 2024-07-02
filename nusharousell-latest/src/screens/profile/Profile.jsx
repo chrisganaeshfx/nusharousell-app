@@ -41,6 +41,8 @@ export default function Profile() {
 		fetchProducts();
 	}, [fetchProducts]);
 
+console.log('CurrUser: ', currUser);
+console.log('Seller: ', seller);
 
   // Effect to filter products of the selected seller
   useEffect(() => {
