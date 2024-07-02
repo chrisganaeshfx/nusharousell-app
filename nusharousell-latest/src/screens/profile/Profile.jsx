@@ -12,7 +12,7 @@ import '../styles/ProductList.css'; // Use product card styles from ProductList.
 export default function Profile() {
   // Get the current user from AuthUserContext
   const { user } = useAuthUser();
-  const currUser = { user };
+  const currUser = user;
 
   // Get all users from UsersContext
 	const { users } = useUsers();
