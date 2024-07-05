@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { db } from '../../config/firebase';
-import { doc, getDoc, updateDoc, deleteDoc, query, collection, where, getDocs, serverTimestamp, addDoc, arrayUnion, setDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, deleteDoc, query, collection, where, getDocs, serverTimestamp, addDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import '../styles/ProductDetail.css';
 import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
 import { useChats } from '../GLOBAL/contexts/ChatsContext';
+import { FaHeart } from 'react-icons/fa';
 
 export default function ProductDetail() {
   const { productID } = useParams();
@@ -12,6 +13,7 @@ export default function ProductDetail() {
   const { user } = useAuthUser();
   const [userIsSeller, setUserIsSeller] = useState(false);
   const { fetchChats } = useChats();
+  const [likedProducts, setLikedProducts] = useState([]);
   const navigate = useNavigate();
 
   console.log('productID: ', productID);
@@ -99,6 +101,45 @@ export default function ProductDetail() {
       }
     } catch (error) {
       console.error("Error checking or creating chatroom:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchLikedProducts = async () => {
+      if (user) {
+        const userRef = doc(db, 'Users', user.userID);
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setLikedProducts(userData.userLike || []);
+        }
+      }
+    };
+    fetchLikedProducts();
+  }, [user]);
+
+  const handleLikeClick = async (productID) => {
+    if (!user) return; // Ensure user is logged in
+
+    const userRef = doc(db, 'Users', user.userID);
+    const isLiked = likedProducts.includes(productID);
+
+    try {
+      if (isLiked) {
+        await updateDoc(userRef, {
+          userLike: arrayRemove(productID),
+        });
+        setLikedProducts((prev) => prev.filter((id) => id !== productID));
+        console.log('Product unliked successfully!');
+      } else {
+        await updateDoc(userRef, {
+          userLike: arrayUnion(productID),
+        });
+        setLikedProducts((prev) => [...prev, productID]);
+        console.log('Product marked as liked successfully!');
+      }
+    } catch (error) {
+      console.error('Error updating liked products:', error);
     }
   };
 
@@ -214,9 +255,11 @@ export default function ProductDetail() {
                 <button onClick={handleChatClick} className='bold-link'>
                   Chat with Seller
                 </button>
-                <Link to={`/like/${productID}`} className='action-link'>
-                  Like
-                </Link>
+                <button
+                onClick={() => handleLikeClick(productID)}
+                className={`like-button ${likedProducts.includes(productID) ? 'liked' : ''}`}>
+                <FaHeart className="heart-icon" />
+              </button>
               </>
             )}
           </div>

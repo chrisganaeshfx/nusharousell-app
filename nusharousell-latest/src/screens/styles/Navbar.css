@@ -41,6 +41,7 @@
   
   .middle-header .search_box input {
     padding: 8px;
+    font-size: 25px;
     border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
   }
@@ -76,7 +77,7 @@
   }
 
   .rightside-header.dropdown .dropbtn {
-    font-size: 18px;
+    font-size: 25px;
     border: none;
     outline: none;
     color: white;

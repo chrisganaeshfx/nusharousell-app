@@ -29,6 +29,7 @@ export default function Signup() {
         meetupLocation: '',
         userProducts: [],
 		userChats: [],
+		userLike: [],
         createdAt: new Date()
       });
       setUserName('');

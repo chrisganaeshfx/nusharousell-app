@@ -21,6 +21,8 @@ import EditProfile from './screens/profile/EditProfile';
 // chat
 import ChatList from './screens/chats/ChatList';
 import ChatPage from './screens/chats/ChatPage';
+// like
+import LikedProducts from './screens/like/like';
 
 export default function App() {
 	/* *******SEARCHING PRODUCT********
@@ -80,6 +82,7 @@ export default function App() {
 											path='*'
 											element={<h1>Error 404: Page not found</h1>}
 										/>
+										<Route path="/like" element={<LikedProducts />} />
 									</Routes>
 								<Footer className='footer'/>
 							</ProductsProvider>

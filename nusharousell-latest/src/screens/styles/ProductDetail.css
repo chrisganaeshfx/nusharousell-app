@@ -115,3 +115,35 @@
 .reserved-banner {
   background-color: #800080;
 }
+
+/* Styling for like button */
+.like-button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.like-button:hover {
+  background-color: #333;
+}
+
+.like-button .heart-icon {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.like-button.liked {
+  background-color: black;
+  color: red;
+}
+
+.like-button.liked:hover {
+  background-color: #333;
+  color: #ff4d4d; /* Lighter red when hovered */
+}

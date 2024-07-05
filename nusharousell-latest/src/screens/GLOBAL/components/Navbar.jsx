@@ -63,7 +63,7 @@ export default function Navbar() {
                 <Link onClick={() => {handleLogout()}}>Logout</Link>
               </div>
             </div>
-            <Link to='/'><FaRegHeart /></Link>
+            <Link to='/like'><FaRegHeart /></Link>
             <a href="/chats"> <MdChatBubbleOutline/></a>
             <Link to="/product/add">Sell</Link>
           </div>
