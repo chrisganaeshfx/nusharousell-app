@@ -40,6 +40,18 @@ export default function Navbar() {
 						/>
           </a>
         </div>
+        <div className='middle-header'>
+          <div className='search_box'>
+            <input
+              type='text'
+              value={search}
+              placeholder='Search'
+              onChange={(e) => setSearch(e.target.value)}></input>
+            <button onClick={handleSearch}>
+              <FaSearch />{' '}
+            </button>
+          </div>
+        </div> 
         {user ? (
           <div className='rightside-header'>
             <div className='dropdown'>
@@ -60,19 +72,7 @@ export default function Navbar() {
             <Link to="/login">Login</Link>
             <Link to="/signup">Register</Link>
           </div>
-        )}
-      </div>       
-			<div className='middle-header'>
-				<div className='search_box'>
-					<input
-						type='text'
-						value={search}
-						placeholder='Search'
-						onChange={(e) => setSearch(e.target.value)}></input>
-					<button onClick={handleSearch}>
-						<FaSearch />{' '}
-					</button>
-				</div>
+        )}      
 			</div>
 		</div>
   );

@@ -96,7 +96,6 @@ export default function ProductDetail() {
 
         fetchChats(); // Refresh chats after creating a new chatroom
         navigate(`/chats/${chatroomID}`); // Navigate to the new chatroom
-        window.location.reload();
       }
     } catch (error) {
       console.error("Error checking or creating chatroom:", error);

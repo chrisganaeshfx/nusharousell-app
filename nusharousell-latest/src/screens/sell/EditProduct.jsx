@@ -5,12 +5,10 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db, storage } from '../../config/firebase';
 import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
 import Dropdown from './FormDropdown';
-import '../styles/AddProduct.css'; // Import the CSS file
 
 export default function EditProduct() {
   const { productID } = useParams();
   const { user } = useAuthUser();
-
   const [productName, setProductName] = useState('');
   const [category, setCategory] = useState('');
   const [condition, setCondition] = useState('');
@@ -36,7 +34,7 @@ export default function EditProduct() {
           setDescription(productData.productDescription);
           setLocation(productData.productLocation);
           setPrice(productData.productPrice);
-          setImageUrl(productData.productImage); // Set image URL for preview
+          setImageUrl(productData.productImageUrl); // Set image URL for preview
         } else {
           setError('Product not found');
         }
@@ -129,12 +127,12 @@ export default function EditProduct() {
     <>
       <h2>Edit Product</h2>
       <form className='inputs' onSubmit={handleEditProduct}>
+      <h5> Image </h5>
         <div className='image-preview'>
           {imageUrl && (
             <img src={imageUrl} alt='Product' className='preview-image' />
           )}
         </div>
-        <label htmlFor='image'>Image</label>
         <input type='file' id='file' onChange={imageHandler} />
         {error && <span className='error-msg'>{error}</span>}
         <br />

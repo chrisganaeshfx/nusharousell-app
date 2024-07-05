@@ -4,6 +4,9 @@ import { ProductsProvider } from './screens/GLOBAL/contexts/ProductsContext';
 import { AuthUserProvider } from './screens/GLOBAL/contexts/AuthUserContext';
 import { UsersProvider } from './screens/GLOBAL/contexts/UsersContext';
 import { ChatsProvider } from './screens/GLOBAL/contexts/ChatsContext';
+// Navbar and Footer
+import Navbar from "./screens/GLOBAL/components/Navbar";
+import Footer from "./screens/GLOBAL/components/Footer";
 // auth and homepages
 import Login from './screens/auth/Login';
 import Signup from './screens/auth/Signup';
@@ -33,50 +36,52 @@ export default function App() {
 					<AuthUserProvider>
 						<UsersProvider>
 							<ProductsProvider>
-								<Routes>
-									<Route
-										path='/signup'
-										element={<Signup />}
-									/>
-									<Route
-										path='/login'
-										element={<Login />}
-									/>
-									<Route
-										path='/'
-										element={<Homepage />}
-									/>
-									<Route
-										path='/product/add'
-										element={<AddProduct />}
-									/>
-									<Route
-										path='/product/view/:productID'
-										element={<ProductDetail />}
-									/>
-									<Route
-										path='/product/edit/:productID'
-										element={<EditProduct />}
-									/>
-									<Route
-										path='/userprofile/view/:userID'
-										element={<Profile />}
-									/>
-									<Route
-										path='/userprofile/view/:sellerID'
-										element={<Profile />}
-									/>
-									<Route
-										path='/userprofile/edit/:userID'
-										element={<EditProfile />}
-									/>
-									<Route path="/chats" element={<ChatList />} />
-          							<Route path="/chats/:chatroomId" element={<ChatPage />} />
-									<Route
-										path='*'
-										element={<h1>Error 404: Page not found</h1>}
-									/>
-								</Routes>
+								<Navbar className='header'/>
+									<Routes>
+										<Route
+											path='/signup'
+											element={<Signup />}
+										/>
+										<Route
+											path='/login'
+											element={<Login />}
+										/>
+										<Route
+											path='/'
+											element={<Homepage />}
+										/>
+										<Route
+											path='/product/add'
+											element={<AddProduct />}
+										/>
+										<Route
+											path='/product/view/:productID'
+											element={<ProductDetail />}
+										/>
+										<Route
+											path='/product/edit/:productID'
+											element={<EditProduct />}
+										/>
+										<Route
+											path='/userprofile/view/:userID'
+											element={<Profile />}
+										/>
+										<Route
+											path='/userprofile/view/:sellerID'
+											element={<Profile />}
+										/>
+										<Route
+											path='/userprofile/edit/:userID'
+											element={<EditProfile />}
+										/>
+										<Route path="/chats" element={<ChatList />} />
+										<Route path="/chats/:chatroomId" element={<ChatPage />} />
+										<Route
+											path='*'
+											element={<h1>Error 404: Page not found</h1>}
+										/>
+									</Routes>
+								<Footer className='footer'/>
 							</ProductsProvider>
 						</UsersProvider>
 					</AuthUserProvider>

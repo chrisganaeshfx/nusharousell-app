@@ -40,13 +40,13 @@
   }
   
   .middle-header .search_box input {
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
   }
   
   .middle-header .search_box button {
-    padding: 10px;
+    padding: 8px;
     background: #EEEEEE;
     border: none;
     cursor: pointer;
@@ -76,7 +76,7 @@
   }
 
   .rightside-header.dropdown .dropbtn {
-    font-size: 16px;
+    font-size: 18px;
     border: none;
     outline: none;
     color: white;
@@ -126,33 +126,4 @@
 .fact{
     display: flex;
     justify-content: center;
-}
-  /* Categories */
-.categories{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-.categories button{
-    padding: 10px 20px;
-    background: #EEEEEE;
-    cursor: pointer;
-    border: 1px solid #ccc;
-}
-
-/* Recos css */
-.image{
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.image figure figcaption{
-    color: black;
-}
-.image figure a{
-  text-decoration: none;
-}
-.image figure a:hover{
-  text-decoration: underline;
 }

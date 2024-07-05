@@ -1,9 +1,16 @@
+.body{
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .footer {
     background-color: #f1f1f1; /* Light grey background */
     padding: 0px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    margin-top: auto;
 }
 
 .footer .logo {

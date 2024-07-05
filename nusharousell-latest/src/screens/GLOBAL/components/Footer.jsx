@@ -5,6 +5,7 @@ import "../../styles/Footer.css";
 
 export default function Footer(){
     return(
+        <div className = 'body'>
         <div className='footer'>
             <div className='logo'>
                 <img src={logo} alt="logo" />
@@ -26,6 +27,7 @@ export default function Footer(){
                 <a href="/">Home</a>
                 <Link to='/chats'>Chats</Link>
             </div>            
+        </div>
         </div>
     );
 }

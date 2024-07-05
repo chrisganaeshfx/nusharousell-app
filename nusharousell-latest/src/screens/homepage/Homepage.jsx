@@ -10,12 +10,8 @@ export default function Homepage() {
 
   return (
     <div className='home'>
-      <Navbar className='header'/>
-      <div>
         <CategoriesFilter />
         <Catalogue />
-      </div>
-      <Footer className='footer'/>
     </div>
   );
 }

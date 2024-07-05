@@ -1,6 +1,8 @@
 .product-list-container {
   width: 100%;
   padding: 10px; /* Add padding as needed */
+  justify-content: center;
+  align-items: center;
 }
 
 .product-list {
@@ -63,6 +65,7 @@
   font-size: 14px;
   line-height: 1.5;
   color: #555; /* Adjust text color as needed */
+  text-decoration: none;
 }
 
 /* Media Query for Responsive Layout */
