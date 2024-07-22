@@ -60,7 +60,7 @@ export default function Navbar() {
                 <Link to={`/userprofile/view/${user.userID}`}>Profile</Link>
                 <Link to="/">Manage Listings</Link>
                 <Link to="/">Settings</Link>
-                <Link onClick={() => {handleLogout()}}>Logout</Link>
+                <Link to="/" onClick={() => {handleLogout()}}>Logout</Link>
               </div>
             </div>
             <Link to='/like'><FaRegHeart /></Link>

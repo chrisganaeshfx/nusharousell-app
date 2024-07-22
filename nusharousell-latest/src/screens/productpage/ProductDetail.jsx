@@ -70,7 +70,7 @@ export default function ProductDetail() {
       });
 
       if (foundChatroom) {
-        navigate(`/chats`); 
+        navigate(`/chats/${foundChatroom}`); 
       } else {
         // Create a new chatroom if not found
         const newChatData = {
