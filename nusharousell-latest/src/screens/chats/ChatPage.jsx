@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { db } from '../../config/firebase';
-import { collection, doc, addDoc, serverTimestamp, query, orderBy, getDocs, getDoc, deleteDoc } from 'firebase/firestore';
+import { collection, doc, addDoc, serverTimestamp, query, orderBy, getDocs, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { useChats } from '../GLOBAL/contexts/ChatsContext';
 import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
 import '../styles/ChatPage.css';
@@ -22,25 +22,22 @@ const ChatPage = () => {
       const querySnapshot = await getDocs(q);
       const messages = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
       setMessages(messages);
+      return messages;
     } catch (error) {
       console.error("Error fetching messages:", error);
+      return [];
     }
   };
 
   useEffect(() => {
     const fetchChatroomData = async (chatroomId) => {
         try {
-          console.log("Fetching chatroom data for ID:", chatroomId);
           const chatroomRef = doc(db, 'Chatroom', chatroomId);
-          console.log("Chatroom reference:", chatroomRef);
           const chatroomDoc = await getDoc(chatroomRef);
-          console.log("Chatroom document:", chatroomDoc);
           if (chatroomDoc.exists()) {
             const chatroomData = chatroomDoc.data();
-            console.log("Chatroom data fetched:", chatroomData);
             const otherUserData = await fetchOtherUser(chatroomData.Users, currUser.userID);
             setOtherUser(otherUserData);
-            console.log("Other user data set:", otherUserData);
             await fetchMessages(chatroomId);
           }
         } catch (error) {
@@ -78,32 +75,24 @@ const ChatPage = () => {
       const messageRef = doc(db, 'Chatroom', chatroomId, 'Messages', messageId);
       await deleteDoc(messageRef);
 
-      // Fetch the updated list of messages after deletion
-      const chatroomRef = doc(db, 'Chatroom', chatroomId);
-      const messagesRef = collection(chatroomRef, 'Messages');
-      const q = query(messagesRef, orderBy('createdAt'));
-      const querySnapshot = await getDocs(q);
-      const messages = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+    const updatedMessages = await fetchMessages(chatroomId);
 
-      // Update the last message in the chatroom document
-      if (messages.length > 0) {
-        const lastMessage = messages[messages.length - 1].content;
-        await updateLastMessage(chatroomId, lastMessage);
-      } else {
-        await updateLastMessage(chatroomId, ""); // No messages left
-      }
-
-      setMessages(messages); // Update the state with the new list of messages
-    } catch (error) {
-      console.error("Error deleting message:", error);
+    if (updatedMessages.length > 0) {
+      const lastMessage = updatedMessages[updatedMessages.length - 1].content;
+      await updateLastMessage(chatroomId, lastMessage);
+    } else {
+      await updateLastMessage(chatroomId, "");
     }
-  };
+  } catch (error) {
+    console.error("Error deleting message:", error);
+  }
+};
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (chatroomId && newMessage.trim() !== "") {
       await addMessage(chatroomId, currUser.userID, newMessage);
-      setNewMessage(""); // Clear the input field after sending the message
+      setNewMessage("");
     }
   };
 
@@ -132,6 +121,7 @@ const ChatPage = () => {
         ) : (
           <p>No messages found</p>
         )}
+        
       </div>
       <form className="new-message">
         <textarea 

@@ -50,18 +50,13 @@ export default function ProductDetail() {
       const currentUserID = user.userID;
       const otherUserID = product.sellerID;
 
-      // Query to find chatroom where Users array contains the current user ID
       const q = query(
         collection(db, 'Chatroom'),
         where('Users', 'array-contains', currentUserID)
       );
-
-      // Execute the query
       const querySnapshot = await getDocs(q);
 
       let foundChatroom = null;
-
-      // Check each document to see if it also contains the other user ID
       querySnapshot.forEach((doc) => {
         const chatroom = doc.data();
         if (chatroom.Users.includes(otherUserID)) {
@@ -72,7 +67,6 @@ export default function ProductDetail() {
       if (foundChatroom) {
         navigate(`/chats/${foundChatroom}`); 
       } else {
-        // Create a new chatroom if not found
         const newChatData = {
           Users: [currentUserID, otherUserID],
           createdAt: serverTimestamp(),
@@ -96,8 +90,8 @@ export default function ProductDetail() {
           userChats: arrayUnion(chatroomID),
         });
 
-        fetchChats(); // Refresh chats after creating a new chatroom
-        navigate(`/chats/${chatroomID}`); // Navigate to the new chatroom
+        fetchChats(); 
+        navigate(`/chats/${chatroomID}`);
       }
     } catch (error) {
       console.error("Error checking or creating chatroom:", error);
@@ -130,13 +124,11 @@ export default function ProductDetail() {
           userLike: arrayRemove(productID),
         });
         setLikedProducts((prev) => prev.filter((id) => id !== productID));
-        console.log('Product unliked successfully!');
       } else {
         await updateDoc(userRef, {
           userLike: arrayUnion(productID),
         });
         setLikedProducts((prev) => [...prev, productID]);
-        console.log('Product marked as liked successfully!');
       }
     } catch (error) {
       console.error('Error updating liked products:', error);
