@@ -7,6 +7,7 @@ import { FaSearch, FaRegHeart } from 'react-icons/fa';
 import { MdChatBubbleOutline } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/Navbar.css';
 
 export default function Navbar() {
@@ -14,9 +15,14 @@ export default function Navbar() {
   const { user, setUser } = useAuthUser();
 	
   const [search, setSearch] = useState('');
+  const navigate = useNavigate();
+
 	const handleSearch = (e) => {
-		e.preventDefault();
-	};
+    e.preventDefault();
+    if (search.trim() !== '') {
+      navigate(`/search/${search.trim()}`);
+    }
+  };
 
   async function handleLogout() {
     try {

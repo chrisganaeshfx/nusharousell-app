@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { doc, getDoc} from 'firebase/firestore';
 import { useAuthUser } from '../GLOBAL/contexts/AuthUserContext';
 import { Link } from 'react-router-dom';
 import { db } from '../../config/firebase';
@@ -43,6 +43,16 @@ export default function LikedProducts() {
                 {likedProducts.map((product) => (
                 <div key={product.productID} className="product-card">
                     <figure>
+                    <Link to={`/userprofile/view/${product.sellerID}`}>
+                        <div className='user-info'>
+                        <img
+                            src={product.sellerImageUrl}
+                            alt={product.sellerUserName}
+                            className='user-image'
+                        />
+                        <span>@{product.sellerUserName}</span>
+                        </div>
+                    </Link>
                     <Link to={`/product/view/${product.productID}`}>
                     <div className='product-image-container'>
                     <img src={product.productImageUrl} alt={product.productName} className = 'product-image' />

@@ -1,11 +1,11 @@
-.liked-products-container {
+.search-products-container {
     width: 100%;
     padding: 10px; /* Add padding as needed */
     justify-content: center;
     align-items: center;
   }
   
-  .liked-products-list{
+  .search-products-list{
     display: flex;
     flex-wrap: wrap;
     gap: 20px; /* Adjust the gap between items as needed */
