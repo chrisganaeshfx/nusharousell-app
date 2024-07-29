@@ -162,7 +162,7 @@ export default function AddProduct() {
 				<Dropdown
 					label='Category'
 					value={category}
-					options={['Stationery', 'Clothes', 'Electronics', 'Sports', 'Health']}
+					options={['Technology', 'Home Living & Appliances', 'Fashion', 'Self-care', 'Sport & Activities', 'Services']}
 					onChange={setCategory}
 				/>
 				<Dropdown

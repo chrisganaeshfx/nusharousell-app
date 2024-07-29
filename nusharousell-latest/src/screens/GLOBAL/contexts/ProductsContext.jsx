@@ -55,7 +55,7 @@ export const ProductsProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchProducts(); // Default fetch on mount
+    fetchProducts();
   }, []);
 
   return (
@@ -64,9 +64,3 @@ export const ProductsProvider = ({ children }) => {
     </ProductsContext.Provider>
   );
 };
-
-/*
-if (sellerID) {
-  q = query(q, where("sellerId", "==", sellerID));
-}
-*/

@@ -25,6 +25,8 @@ import ChatPage from './screens/chats/ChatPage';
 import LikedProducts from './screens/like/like';
 // search
 import Search from './screens/search/Search';
+// categories
+import Category from './screens/homepage/components/CategoryButtons';
 
 export default function App() {
 	/* *******SEARCHING PRODUCT********

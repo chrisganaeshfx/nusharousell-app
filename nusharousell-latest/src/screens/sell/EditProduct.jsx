@@ -157,7 +157,7 @@ export default function EditProduct() {
         <Dropdown
           label='Category'
           value={category}
-          options={['Clothes', 'Electronics', 'Sports', 'Health']}
+          options={['Technology', 'Home Living & Appliances', 'Fashion', 'Self-care', 'Sport & Activities', 'Services']}
           onChange={setCategory}
         />
         <Dropdown

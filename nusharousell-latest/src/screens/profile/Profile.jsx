@@ -75,15 +75,6 @@ console.log('Seller: ', seller);
 					<FaPhoneAlt />: +65 {Number(seller.phoneNumber)}
 				</p>
 				<p>
-					{seller.rating !== 0 ? (
-						<>
-							<FaStar />: {seller.rating}/5.0
-						</>
-					) : (
-						'No ratings yet'
-					)}
-				</p>
-				<p>
 					<FaSchool />: {seller.meetupLocation}
 				</p>
         {currUser.userID === seller.userID && (<button onClick={() => (window.location.href = `/userprofile/edit/${seller.userID}`)}>

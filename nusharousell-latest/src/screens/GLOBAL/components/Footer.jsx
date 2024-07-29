@@ -19,13 +19,15 @@ export default function Footer(){
             </div>
             <div className='Creators'>
                 <h3>Creators</h3>
+                <Link to="https://github.com/Eun18">Eunice</Link>
                 <Link to="https://github.com/chrisganaeshfx">Chris</Link>
-                <Link href="https://github.com/Eun18">Eunice</Link>
             </div>
             <div className='Links'>
                 <h3>Links</h3>
                 <a href="/">Home</a>
+                <Link to='/userprofile'>Profile</Link>
                 <Link to='/chats'>Chats</Link>
+                <Link to='/like'>Likes</Link>
             </div>            
         </div>
         </div>

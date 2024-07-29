@@ -36,7 +36,8 @@ export default function Catalogue() {
 		<div className='product-list-container'>
 			<br />
 			<div className='product-list'>
-				{availableProducts.map((product) => (
+				{availableProducts.length > 0 ? (
+					availableProducts.map((product) => (
 					<div
 						key={product.productID}
 						className='product-card'>
@@ -67,7 +68,10 @@ export default function Catalogue() {
 							</Link>
 						</figure>
 					</div>
-				))}
+				))
+			) : (
+			  <p>No products available</p>
+			)}
 			</div>
 		</div>
 	);
