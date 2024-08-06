@@ -64,8 +64,6 @@ export default function Navbar() {
               <a className='dropbtn'>Hello, {user.userName} <CgProfile /></a>
               <div className='dropdown-content'>
                 <Link to={`/userprofile/view/${user.userID}`}>Profile</Link>
-                <Link to="/">Manage Listings</Link>
-                <Link to="/">Settings</Link>
                 <Link to="/" onClick={() => {handleLogout()}}>Logout</Link>
               </div>
             </div>
